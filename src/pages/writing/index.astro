@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EssayCard from "../../components/EssayCard.astro";
+
+const essays = (await getCollection("writing", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Writing — Rishi Srikaanth" description="Essays.">
+  <section class="container">
+    <h1>Writing</h1>
+    <p class="prose lede">Occasional essays — usually where my interests collide.</p>
+    <div>
+      {
+        essays.map((e) => (
+          <EssayCard
+            title={e.data.title}
+            description={e.data.description}
+            pubDate={e.data.pubDate}
+            href={`/writing/${e.id}`}
+          />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede {
+    color: var(--ink-soft);
+    font-size: 1.2rem;
+    margin-bottom: var(--space-4);
+  }
+</style>
