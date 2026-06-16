@@ -1,43 +1,30 @@
-# Astro Starter Kit: Minimal
+# rsrikaanth.com
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal portfolio. Astro, static output. Calm paper-and-ink design with a
+signature kolam line-draw page transition.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Develop
+- `npm install`
+- `npm run dev` → http://localhost:4321
+- `npm test` → unit tests (Vitest)
+- `npm run build` → static site in `dist/`
 
-## 🚀 Project Structure
+## Content
+- Work entries: `src/content/work/*.md` (frontmatter schema in `src/content.config.ts`)
+- Essays: `src/content/writing/*.mdx` (set `draft: true` to hide)
+- Résumé: replace `public/resume.pdf`
+- Portrait: replace `public/images/portrait.svg`
 
-Inside of your Astro project, you'll see the following folders and files:
+## Design
+- Spec: `docs/superpowers/specs/2026-06-16-portfolio-website-design.md`
+- Plan: `docs/superpowers/plans/2026-06-16-portfolio-website.md`
+- Design tokens (colors, type, spacing): `src/styles/tokens.css` — use the CSS
+  custom properties, never raw hex, in components.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Deploy
+1. Push to GitHub.
+2. Connect the repo to Cloudflare Pages (build command `npm run build`, output `dist`)
+   or Vercel (framework preset: Astro).
+3. Add custom domain `rsrikaanth.com`; update the registrar's DNS to the host's
+   target (CNAME/`A`/nameservers per provider instructions).
+4. Confirm HTTPS and that `https://rsrikaanth.com` serves the site.

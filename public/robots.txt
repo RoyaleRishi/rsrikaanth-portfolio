@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://rsrikaanth.com/sitemap-index.xml
