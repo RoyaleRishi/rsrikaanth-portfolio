@@ -7,7 +7,13 @@
       "Bash(git add *)",
       "Bash(git commit -q -m 'Add portfolio website design spec *)",
       "Bash(git commit -q --amend --reset-author -m 'Add portfolio website design spec *)",
-      "Bash(git commit -q -m 'Add portfolio website implementation plan *)"
+      "Bash(git commit -q -m 'Add portfolio website implementation plan *)",
+      "Bash(git checkout *)",
+      "Bash(npm --version)",
+      "Bash(git -C /Users/rishis/Desktop/Dev/portfolio branch --show-current)",
+      "Bash(git -C /Users/rishis/Desktop/Dev/portfolio status)",
+      "Bash(git -C /Users/rishis/Desktop/Dev/portfolio diff --stat HEAD)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
