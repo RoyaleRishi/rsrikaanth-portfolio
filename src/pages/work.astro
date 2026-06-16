@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WorkEntry from "../components/WorkEntry.astro";
+
+const entries = (await getCollection("work")).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout title="Work — Rishi Srikaanth" description="Selected work and projects.">
+  <section class="container">
+    <h1>Work</h1>
+    <p class="prose lede">A handful of things I've built and the reasons they mattered to me.</p>
+    <div class="list">
+      {
+        entries.map((e) => (
+          <WorkEntry
+            title={e.data.title}
+            context={e.data.context}
+            summary={e.data.summary}
+            why={e.data.why}
+            tech={e.data.tech}
+            link={e.data.link}
+          />
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lede {
+    color: var(--ink-soft);
+    font-size: 1.2rem;
+    margin-bottom: var(--space-4);
+  }
+  .list {
+    margin-top: var(--space-3);
+  }
+</style>

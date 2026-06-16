@@ -1,17 +1,88 @@
 ---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WorkEntry from "../components/WorkEntry.astro";
 
+const featured = (await getCollection("work"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)[0];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Rishi Srikaanth — AI Engineer">
+  <section class="hero container">
+    <p class="eyebrow">AI Engineer</p>
+    <h1>Rishi Srikaanth</h1>
+    <p class="prose intro">
+      I build AI systems and think a lot about who they're for. Raised between
+      Nairobi and Tamil Nadu, now in Boston — I care about AI safety, cultural
+      equity, and the questions class quietly asks of technology.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="head"><h2>Selected work</h2><a class="link" href="/work">All work →</a></div>
+    {
+      featured.map((e) => (
+        <WorkEntry
+          title={e.data.title}
+          context={e.data.context}
+          summary={e.data.summary}
+          why={e.data.why}
+          tech={e.data.tech}
+          link={e.data.link}
+        />
+      ))
+    }
+  </section>
+
+  {
+    latest && (
+      <section class="container latest">
+        <div class="head"><h2>Writing</h2><a class="link" href="/writing">All essays →</a></div>
+        <a class="latest-link" href={`/writing/${latest.id}`}>
+          <h3>{latest.data.title}</h3>
+          <p>{latest.data.description}</p>
+        </a>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-6) var(--space-5);
+  }
+  .eyebrow {
+    color: var(--ochre);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin: 0 0 var(--space-2);
+  }
+  .intro {
+    font-size: 1.3rem;
+    color: var(--ink-soft);
+    margin-top: var(--space-3);
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: var(--space-5);
+  }
+  .latest-link h3 {
+    margin: var(--space-2) 0 var(--space-1);
+    transition: color 180ms ease;
+  }
+  .latest-link:hover h3 {
+    color: var(--brick);
+  }
+  .latest-link p {
+    color: var(--ink-soft);
+    max-width: var(--prose-max);
+  }
+</style>

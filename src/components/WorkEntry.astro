@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  context?: string;
+  summary: string;
+  why: string;
+  tech: string[];
+  link?: string;
+}
+const { title, context, summary, why, tech, link } = Astro.props;
+---
+
+<article class="entry">
+  <header>
+    <h3>{title}</h3>
+    {context && <p class="context">{context}</p>}
+  </header>
+  <p class="summary">{summary}</p>
+  <p class="why">{why}</p>
+  {
+    tech.length > 0 && (
+      <ul class="tech">
+        {tech.map((t) => <li>{t}</li>)}
+      </ul>
+    )
+  }
+  {link && <a class="link" href={link}>View on GitHub →</a>}
+</article>
+
+<style>
+  .entry {
+    padding-block: var(--space-4);
+    border-top: 0.5px solid color-mix(in srgb, var(--ink) 15%, transparent);
+    display: grid;
+    gap: var(--space-1);
+  }
+  .context {
+    color: var(--brick);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .summary {
+    font-size: 1.15rem;
+    margin: var(--space-1) 0 0;
+  }
+  .why {
+    color: var(--ink-soft);
+    max-width: var(--prose-max);
+  }
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-1) 0 0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+</style>
