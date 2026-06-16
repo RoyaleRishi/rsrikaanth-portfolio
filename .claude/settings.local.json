@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__visualize__show_widget",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -q -m 'Add portfolio website design spec *)",
+      "Bash(git commit -q --amend --reset-author -m 'Add portfolio website design spec *)"
+    ]
+  }
+}
