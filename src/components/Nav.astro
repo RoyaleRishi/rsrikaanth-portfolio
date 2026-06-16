@@ -1,0 +1,53 @@
+---
+const { pathname } = Astro.url;
+const links = [
+  { href: "/work", label: "Work" },
+  { href: "/writing", label: "Writing" },
+  { href: "/about", label: "About" },
+];
+const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+---
+
+<nav class="nav container" aria-label="Primary">
+  <a href="/" class="wordmark">Rishi Srikaanth</a>
+  <ul>
+    {
+      links.map((l) => (
+        <li>
+          <a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+            {l.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: var(--space-3);
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+  ul {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  ul a {
+    color: var(--ink-soft);
+    transition: color 180ms ease;
+  }
+  ul a:hover,
+  ul a[aria-current="page"] {
+    color: var(--ink);
+  }
+</style>

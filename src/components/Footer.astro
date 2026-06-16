@@ -1,0 +1,47 @@
+---
+const year = new Date().getFullYear();
+const links = [
+  { href: "mailto:srikaanth.r@northeastern.edu", label: "Email" },
+  { href: "https://github.com/", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/rishisrikaanth/", label: "LinkedIn" },
+  { href: "/resume.pdf", label: "Résumé" },
+];
+---
+
+<footer class="footer container">
+  <p class="grace" lang="mul">Nairobi · சென்னை · Boston</p>
+  <ul>
+    {links.map((l) => (
+      <li><a class="link" href={l.href}>{l.label}</a></li>
+    ))}
+  </ul>
+  <p class="fine">© {year} Rishi Srikaanth · <span lang="sw">Karibu</span> / <span lang="ta">வணக்கம்</span></p>
+</footer>
+
+<style>
+  .footer {
+    border-top: 0.5px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    margin-top: var(--space-6);
+    padding-block: var(--space-4) var(--space-5);
+    display: grid;
+    gap: var(--space-2);
+  }
+  .grace {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .fine {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+</style>
