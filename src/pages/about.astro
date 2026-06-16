@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="About — Rishi Srikaanth"
+  description="Raised between Nairobi and Tamil Nadu, now building AI in Boston."
+>
+  <section class="container about">
+    <div class="portrait">
+      <img src="/images/portrait.svg" alt="Portrait of Rishi Srikaanth" width="800" height="1000" />
+    </div>
+    <div class="prose body">
+      <h1>About</h1>
+      <p>
+        I grew up between Nairobi and Tamil Nadu, studied in India, and now build
+        AI systems in Boston. Carrying more than one place inside you changes how
+        you see a problem — you assume there's always another vantage point you
+        haven't taken yet.
+      </p>
+      <p>
+        I'm drawn to AI safety and to the quieter question underneath it: who
+        gets to benefit, and who pays. Cultural equity and the way class shapes
+        access aren't side interests for me — they're the lens I bring to the work.
+      </p>
+      <p>
+        Away from the screen I play chess for the long quiet think, tennis for the
+        opposite, and I sing — which is its own kind of pattern-matching. They all
+        leak back into how I build.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-5);
+  }
+  @media (min-width: 48rem) {
+    .about {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: var(--space-5);
+      align-items: start;
+    }
+  }
+  .portrait img {
+    border-radius: 4px;
+    filter: grayscale(0.15);
+  }
+</style>
