@@ -23,7 +23,9 @@
       "Bash(npm run *)",
       "Bash(ls -la /Users/rishis/Desktop/resume-may26.pdf 2>/dev/null && echo \"EXISTS\" || echo \"NOT_FOUND\")",
       "Bash(cp /Users/rishis/Desktop/resume-may26.pdf /Users/rishis/Desktop/Dev/portfolio/public/resume.pdf && echo \"Copied OK\")",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('astro version:', d.get\\('version', 'unknown'\\)\\)\")",
+      "Bash(grep -rn \"#[0-9a-fA-F]\\\\{3,6\\\\}\" /Users/rishis/Desktop/Dev/portfolio/src/)"
     ]
   }
 }
