@@ -1,0 +1,64 @@
+---
+interface Props {
+  name: "chess" | "tennis" | "music" | "food" | "fashion";
+  class?: string;
+  style?: string;
+  size?: number;
+}
+const { name, class: className = "", style = "", size = 52 } = Astro.props;
+---
+
+<span
+  class:list={["doodle", className]}
+  style={`width:${size}px;height:${size}px;${style}`}
+  aria-hidden="true"
+>
+  {
+    name === "chess" && (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M24 6 L24 11 M21 8 L27 8" />
+        <circle cx="24" cy="14" r="2.6" fill="currentColor" stroke="none" />
+        <path d="M20 17 C18 24 18 29 18 33 L30 33 C30 29 30 24 28 17 Z" />
+        <path d="M16 41 L32 41 L30 34 L18 34 Z" />
+      </svg>
+    )
+  }
+  {
+    name === "tennis" && (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+        <ellipse cx="19" cy="17" rx="9" ry="11" />
+        <path d="M14 11 L14 24 M19 9 L19 26 M24 11 L24 24 M11 14 L27 14 M11 20 L27 20" stroke-width="1" />
+        <path d="M19 28 L26 40" />
+        <circle cx="34" cy="36" r="4.5" />
+        <path d="M30.5 34 Q34 36 31 39" stroke-width="1" />
+      </svg>
+    )
+  }
+  {
+    name === "music" && (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M17 33 L17 11 L33 8 L33 29" />
+        <path d="M17 14 L33 11" />
+        <ellipse cx="13.5" cy="33" rx="4.5" ry="3.4" fill="currentColor" stroke="none" />
+        <ellipse cx="29.5" cy="29" rx="4.5" ry="3.4" fill="currentColor" stroke="none" />
+      </svg>
+    )
+  }
+  {
+    name === "food" && (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M16 8 L16 15 M20 8 L20 15 M24 8 L24 15 M20 15 L20 41" />
+        <path d="M16 8 C16 13 16 15 20 15 C24 15 24 13 24 8" stroke-width="1" />
+        <path d="M30 8 C35 10 35 21 31 23 L31 41" />
+      </svg>
+    )
+  }
+  {
+    name === "fashion" && (
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M21 9 L27 9 L26 14 L22 14 Z" />
+        <path d="M22 14 L19 31 L24 41 L29 31 L26 14" />
+      </svg>
+    )
+  }
+</span>

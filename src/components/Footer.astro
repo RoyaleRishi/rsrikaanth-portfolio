@@ -1,4 +1,5 @@
 ---
+import Doodle from "./Doodle.astro";
 const year = new Date().getFullYear();
 const links = [
   { href: "mailto:srikaanth.r@northeastern.edu", label: "Email" },
@@ -9,6 +10,7 @@ const links = [
 ---
 
 <footer class="footer block-ink">
+  <Doodle name="music" size={70} style="color:var(--on-ink); opacity:0.22; top:2rem; right:7%; transform:rotate(9deg);" />
   <div class="container inner">
     <p class="cta">Let's talk.</p>
     <ul>
@@ -22,6 +24,8 @@ const links = [
 
 <style>
   .footer {
+    position: relative;
+    overflow: hidden;
     margin-top: var(--space-7);
     padding-block: var(--space-5) var(--space-4);
   }

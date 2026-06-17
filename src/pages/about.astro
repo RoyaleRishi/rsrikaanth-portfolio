@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Doodle from "../components/Doodle.astro";
 
 const facts = [
   "M.S. Artificial Intelligence — Northeastern · GPA 4.0",
@@ -13,6 +14,7 @@ const facts = [
   description="AI engineer in Boston. Roots in Kenya and Tamil Nadu. Interested in AI safety and cultural equity."
 >
   <section class="container about">
+    <Doodle name="tennis" size={70} style="bottom:1rem; left:1%; transform:rotate(-8deg);" />
     <div class="portrait">
       <img src="/images/portrait.svg" alt="Portrait of Rishi Srikaanth" width="800" height="1000" />
       <ul class="facts">
@@ -48,6 +50,7 @@ const facts = [
 
 <style>
   .about {
+    position: relative;
     display: grid;
     gap: var(--space-4);
     padding-block: var(--space-5);

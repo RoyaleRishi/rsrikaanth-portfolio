@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkEntry from "../components/WorkEntry.astro";
+import Doodle from "../components/Doodle.astro";
 
 const projects = (await getCollection("work"))
   .filter((e) => e.data.kind === "project")
@@ -38,6 +39,7 @@ const dust = [
 
 <BaseLayout title="Projects — Rishi Srikaanth" description="Selected projects, explorable by skill.">
   <section class="container head-block">
+    <Doodle name="food" size={62} style="top:2rem; right:6%; transform:rotate(8deg);" />
     <p class="mono eyebrow">Projects</p>
     <h1>Things I've built</h1>
     <p class="prose lead">
@@ -153,6 +155,7 @@ const dust = [
 
 <style>
   .head-block {
+    position: relative;
     padding-block: var(--space-5) var(--space-3);
   }
   .eyebrow {

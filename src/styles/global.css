@@ -116,6 +116,31 @@ img {
   box-shadow: inset 0 -0.45em 0 rgba(244, 176, 25, 0.5);
 }
 
+/* ── Scattered interest doodles (decorative) ── */
+.doodle {
+  position: absolute;
+  display: block;
+  color: var(--ink);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+.doodle svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+@media (max-width: 900px) {
+  .doodle {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .doodle {
+    transition: opacity 300ms ease;
+  }
+}
+
 /* ── Color-block sections ── */
 .block-ink {
   background: var(--ink);

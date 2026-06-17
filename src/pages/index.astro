@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkEntry from "../components/WorkEntry.astro";
 import FourPillars from "../components/FourPillars.astro";
+import Doodle from "../components/Doodle.astro";
 
 const work = await getCollection("work");
 const projects = work
@@ -20,12 +21,15 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
 <BaseLayout title="Rishi Srikaanth — AI Engineer">
   <section class="hero container">
-    <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
-    <h1>Rishi<br />Srikaanth</h1>
-    <FourPillars />
+    <div class="hero-text">
+      <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
+      <h1>Rishi<br />Srikaanth</h1>
+    </div>
+    <FourPillars class="hero-pillars" />
   </section>
 
   <section class="band block-marigold">
+    <Doodle name="tennis" size={88} style="top:50%; right:6%; transform:translateY(-50%) rotate(-10deg); opacity:0.28;" />
     <div class="container">
       <p class="mono band-label">What I care about</p>
       <p class="band-line">
@@ -36,6 +40,7 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
   </section>
 
   <section class="container section">
+    <Doodle name="food" size={58} style="top:1.5rem; right:8%; transform:rotate(8deg);" />
     <div class="head">
       <h2>Selected projects</h2>
       <a class="mono more" href="/projects">All projects <span aria-hidden="true">→</span></a>
@@ -56,6 +61,7 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
   </section>
 
   <section class="container section">
+    <Doodle name="chess" size={62} style="top:1.4rem; right:6%; transform:rotate(-6deg);" />
     <div class="head">
       <h2>Experience</h2>
       <a class="mono more" href="/experience">Full history <span aria-hidden="true">→</span></a>
@@ -93,17 +99,35 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
 <style>
   .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-5);
     padding-block: var(--space-5) var(--space-4);
   }
   .eyebrow {
     color: var(--marigold-ink);
     margin: 0 0 var(--space-2);
   }
-  .hero h1 {
-    margin-bottom: var(--space-4);
+  .hero-text h1 {
+    margin-bottom: 0;
+  }
+  .hero-pillars {
+    justify-self: end;
+  }
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+    .hero-pillars {
+      justify-self: start;
+    }
   }
 
   .band {
+    position: relative;
+    overflow: hidden;
     margin-top: var(--space-4);
     padding-block: var(--space-5);
   }
@@ -122,6 +146,7 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
   }
 
   .section {
+    position: relative;
     padding-top: var(--space-5);
   }
   .head {
