@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WorkEntry from "../components/WorkEntry.astro";
+
+const roles = (await getCollection("work"))
+  .filter((e) => e.data.kind === "role")
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Experience — Rishi Srikaanth" description="Roles and what I shipped in them.">
+  <section class="container head-block">
+    <p class="mono eyebrow">Experience</p>
+    <h1>Where I've worked</h1>
+    <p class="prose lead">
+      Roles across AI engineering, embedded systems, and teaching — most come
+      with a number I'm proud of.
+    </p>
+  </section>
+
+  <section class="container">
+    {
+      roles.map((e) => (
+        <WorkEntry
+          title={e.data.title}
+          org={e.data.org}
+          period={e.data.period}
+          summary={e.data.summary}
+          bullets={e.data.bullets}
+          tech={e.data.tech}
+          links={e.data.links}
+        />
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  .head-block {
+    padding-block: var(--space-5) var(--space-3);
+  }
+  .eyebrow {
+    color: var(--marigold-ink);
+    margin: 0 0 var(--space-2);
+  }
+  .lead {
+    font-size: 1.3rem;
+    color: var(--ink-mute);
+    margin-top: var(--space-2);
+  }
+</style>

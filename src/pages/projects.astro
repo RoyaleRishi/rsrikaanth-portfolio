@@ -1,0 +1,281 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WorkEntry from "../components/WorkEntry.astro";
+
+const projects = (await getCollection("work"))
+  .filter((e) => e.data.kind === "project")
+  .sort((a, b) => a.data.order - b.data.order);
+
+// Skill constellation — each skill maps to projects (by entry id); first = most relevant.
+const skills = [
+  { id: "llms", label: "LLMs", x: 20, y: 28, projects: ["neuronote", "navigatio"] },
+  { id: "rag", label: "RAG", x: 42, y: 16, projects: ["navigatio", "neuronote"] },
+  { id: "agents", label: "Agents", x: 64, y: 24, projects: ["navigatio", "neuronote"] },
+  { id: "fastapi", label: "FastAPI", x: 30, y: 52, projects: ["neuronote", "navigatio"] },
+  { id: "graphs", label: "Graph DBs", x: 13, y: 70, projects: ["neuronote"] },
+  { id: "probabilistic", label: "Probabilistic ML", x: 74, y: 52, projects: ["beam-me-up"] },
+  { id: "perf", label: "Numba / perf", x: 88, y: 36, projects: ["beam-me-up"] },
+  { id: "boosting", label: "Gradient boosting", x: 62, y: 76, projects: ["sentinel"] },
+  { id: "features", label: "Feature engineering", x: 42, y: 84, projects: ["sentinel"] },
+  { id: "a11y", label: "Accessibility", x: 86, y: 72, projects: ["navigatio"] },
+];
+
+const edges = [
+  ["llms", "rag"], ["rag", "agents"], ["llms", "fastapi"], ["fastapi", "graphs"],
+  ["agents", "probabilistic"], ["probabilistic", "perf"], ["probabilistic", "boosting"],
+  ["boosting", "features"], ["agents", "a11y"], ["boosting", "a11y"],
+];
+const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
+---
+
+<BaseLayout title="Projects — Rishi Srikaanth" description="Selected projects, explorable by skill.">
+  <section class="container head-block">
+    <p class="mono eyebrow">Projects</p>
+    <h1>Things I've built</h1>
+    <p class="prose lead">
+      Tap a skill in the constellation to light up the project where it does the
+      most work.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="constellation" data-constellation>
+      <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {
+          edges.map(([a, b]) => (
+            <line
+              x1={pos[a].x}
+              y1={pos[a].y}
+              x2={pos[b].x}
+              y2={pos[b].y}
+              data-edge={`${a} ${b}`}
+            />
+          ))
+        }
+      </svg>
+      {
+        skills.map((s) => (
+          <button
+            class="node mono"
+            type="button"
+            data-skill={s.id}
+            data-projects={s.projects.join(",")}
+            aria-pressed="false"
+            style={`left:${s.x}%; top:${s.y}%`}
+          >
+            <span class="node-dot" aria-hidden="true" />
+            <span class="node-label">{s.label}</span>
+          </button>
+        ))
+      }
+    </div>
+    <p class="hint mono" data-hint>10 skills · 4 projects</p>
+  </section>
+
+  <section class="container cards" data-cards>
+    {
+      projects.map((e) => (
+        <div class="proj-card" data-project={e.id}>
+          <span class="relevant mono" aria-hidden="true">Most relevant</span>
+          <WorkEntry
+            title={e.data.title}
+            org={e.data.org}
+            period={e.data.period}
+            summary={e.data.summary}
+            bullets={e.data.bullets}
+            tech={e.data.tech}
+            links={e.data.links}
+          />
+        </div>
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<script>
+  function wire() {
+    const root = document.querySelector<HTMLElement>("[data-constellation]");
+    const cardsWrap = document.querySelector<HTMLElement>("[data-cards]");
+    const hint = document.querySelector<HTMLElement>("[data-hint]");
+    if (!root || !cardsWrap || root.dataset.wired) return;
+    root.dataset.wired = "1";
+
+    const nodes = Array.from(root.querySelectorAll<HTMLButtonElement>(".node"));
+    const cards = Array.from(cardsWrap.querySelectorAll<HTMLElement>(".proj-card"));
+    const edges = Array.from(root.querySelectorAll<SVGLineElement>("[data-edge]"));
+    let active: string | null = null;
+
+    function reset() {
+      active = null;
+      nodes.forEach((n) => n.setAttribute("aria-pressed", "false"));
+      cards.forEach((c) => c.classList.remove("is-dim", "is-match", "is-primary"));
+      edges.forEach((e) => e.classList.remove("is-lit"));
+      if (hint) hint.textContent = "10 skills · 4 projects";
+    }
+
+    function select(skill: string, btn: HTMLButtonElement) {
+      if (active === skill) {
+        reset();
+        return;
+      }
+      active = skill;
+      const projects = (btn.dataset.projects || "").split(",").filter(Boolean);
+      nodes.forEach((n) => n.setAttribute("aria-pressed", String(n.dataset.skill === skill)));
+      cards.forEach((c) => {
+        const id = c.dataset.project || "";
+        const match = projects.includes(id);
+        c.classList.toggle("is-match", match);
+        c.classList.toggle("is-dim", !match);
+        c.classList.toggle("is-primary", id === projects[0]);
+      });
+      edges.forEach((e) => {
+        const pair = (e.dataset.edge || "").split(" ");
+        e.classList.toggle("is-lit", pair.includes(skill));
+      });
+      if (hint) hint.textContent = `${btn.textContent?.trim()} → ${projects.length} project${projects.length > 1 ? "s" : ""}`;
+    }
+
+    nodes.forEach((n) => n.addEventListener("click", () => select(n.dataset.skill || "", n)));
+  }
+  wire();
+  document.addEventListener("astro:page-load", wire);
+</script>
+
+<style>
+  .head-block {
+    padding-block: var(--space-5) var(--space-3);
+  }
+  .eyebrow {
+    color: var(--marigold-ink);
+    margin: 0 0 var(--space-2);
+  }
+  .lead {
+    font-size: 1.3rem;
+    color: var(--ink-mute);
+    margin-top: var(--space-2);
+  }
+
+  .constellation {
+    position: relative;
+    height: 360px;
+    margin-top: var(--space-2);
+    border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--paper) 50%, transparent);
+    overflow: hidden;
+  }
+  .lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .lines line {
+    stroke: color-mix(in srgb, var(--ink) 22%, transparent);
+    stroke-width: 0.3;
+    transition: stroke 200ms ease, stroke-width 200ms ease;
+  }
+  .lines line.is-lit {
+    stroke: var(--marigold);
+    stroke-width: 0.6;
+  }
+  .node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--paper);
+    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    font-size: 0.72rem;
+    color: var(--ink-mute);
+    cursor: pointer;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    white-space: nowrap;
+  }
+  .node-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--green-soft);
+    flex: none;
+    transition: background 160ms ease, transform 160ms ease;
+  }
+  .node:hover {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .node[aria-pressed="true"] {
+    background: var(--marigold);
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .node[aria-pressed="true"] .node-dot {
+    background: var(--vermilion);
+    transform: scale(1.3);
+  }
+  .hint {
+    color: var(--ink-mute);
+    margin-top: var(--space-2);
+  }
+
+  .cards {
+    padding-top: var(--space-3);
+  }
+  .proj-card {
+    position: relative;
+    transition: opacity 220ms ease;
+  }
+  .proj-card.is-dim {
+    opacity: 0.32;
+  }
+  .proj-card.is-match :global(.entry) {
+    border-top-color: var(--marigold);
+  }
+  .relevant {
+    position: absolute;
+    top: var(--space-4);
+    right: 0;
+    background: var(--marigold);
+    color: var(--ink);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
+  .proj-card.is-primary .relevant {
+    opacity: 1;
+  }
+
+  @media (max-width: 720px) {
+    .constellation {
+      height: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: var(--space-3);
+    }
+    .lines {
+      display: none;
+    }
+    .node {
+      position: static;
+      transform: none;
+      font-size: 0.7rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .proj-card,
+    .node,
+    .node-dot,
+    .lines line,
+    .relevant {
+      transition: none;
+    }
+  }
+</style>

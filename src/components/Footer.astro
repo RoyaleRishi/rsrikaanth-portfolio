@@ -10,10 +10,7 @@ const links = [
 
 <footer class="footer block-ink">
   <div class="container inner">
-    <p class="grace" lang="mul">Nairobi <span aria-hidden="true">·</span> சென்னை <span aria-hidden="true">·</span> Boston</p>
-    <p class="welcome mono">
-      <span lang="sw">Karibu</span> <span aria-hidden="true">/</span> <span lang="ta">வணக்கம்</span> <span aria-hidden="true">/</span> Welcome
-    </p>
+    <p class="cta">Let's talk.</p>
     <ul>
       {links.map((l) => (
         <li><a class="foot-link" href={l.href}>{l.label}</a></li>
@@ -32,23 +29,13 @@ const links = [
     display: grid;
     gap: var(--space-3);
   }
-  .grace {
+  .cta {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    letter-spacing: -0.02em;
+    font-size: clamp(2.25rem, 7vw, 4rem);
+    letter-spacing: -0.025em;
     line-height: 1;
     margin: 0;
-  }
-  .grace span {
-    color: var(--marigold);
-  }
-  .welcome {
-    color: var(--marigold);
-    margin: 0;
-  }
-  .welcome span[lang] {
-    color: var(--on-ink);
   }
   ul {
     display: flex;

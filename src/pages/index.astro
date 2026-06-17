@@ -2,11 +2,16 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkEntry from "../components/WorkEntry.astro";
-import KolamMark from "../components/KolamMark.astro";
+import FourPillars from "../components/FourPillars.astro";
 
-const featured = (await getCollection("work"))
+const work = await getCollection("work");
+const projects = work
+  .filter((e) => e.data.kind === "project")
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
+const roles = work
+  .filter((e) => e.data.kind === "role")
+  .sort((a, b) => a.data.order - b.data.order);
 
 const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -20,7 +25,7 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
       <h1>Rishi<br />Srikaanth</h1>
     </div>
     <div class="hero-mark">
-      <KolamMark size={220} />
+      <FourPillars />
     </div>
     <div class="lead">
       <p>
@@ -48,11 +53,11 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
   <section class="container section">
     <div class="head">
-      <h2>Selected work</h2>
-      <a class="mono more" href="/work">All work <span aria-hidden="true">→</span></a>
+      <h2>Selected projects</h2>
+      <a class="mono more" href="/projects">All projects <span aria-hidden="true">→</span></a>
     </div>
     {
-      featured.map((e) => (
+      projects.map((e) => (
         <WorkEntry
           title={e.data.title}
           org={e.data.org}
@@ -64,6 +69,24 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
         />
       ))
     }
+  </section>
+
+  <section class="container section">
+    <div class="head">
+      <h2>Experience</h2>
+      <a class="mono more" href="/experience">Full history <span aria-hidden="true">→</span></a>
+    </div>
+    <ul class="exp">
+      {
+        roles.map((e) => (
+          <li>
+            <span class="mono exp-period">{e.data.period}</span>
+            <span class="exp-role">{e.data.title}</span>
+            <span class="exp-org mono">{e.data.org}</span>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 
   {
@@ -93,7 +116,6 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
     padding-block: var(--space-5) var(--space-4);
   }
   .hero-mark {
-    color: var(--ink);
     justify-self: end;
   }
   .eyebrow {
@@ -110,14 +132,14 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
     line-height: 1.6;
     margin-bottom: var(--space-2);
   }
-  @media (max-width: 640px) {
+  @media (max-width: 720px) {
     .hero {
       grid-template-columns: 1fr;
     }
     .hero-mark {
       justify-self: start;
       order: -1;
-      margin-bottom: var(--space-2);
+      margin-bottom: var(--space-3);
     }
   }
 
@@ -155,6 +177,41 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
   .more:hover {
     color: var(--ink);
   }
+
+  .exp {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+  }
+  .exp li {
+    display: grid;
+    grid-template-columns: 10rem 1fr auto;
+    gap: var(--space-2);
+    align-items: baseline;
+    padding-block: var(--space-2);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+  .exp-period {
+    color: var(--ink-mute);
+  }
+  .exp-role {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+  .exp-org {
+    color: var(--green-soft);
+    text-align: right;
+  }
+  @media (max-width: 640px) {
+    .exp li {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+    .exp-org {
+      text-align: left;
+    }
+  }
+
   .latest {
     display: block;
     padding-top: var(--space-3);
@@ -172,5 +229,4 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
     max-width: var(--prose-max);
     margin: 0;
   }
-
 </style>
