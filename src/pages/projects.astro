@@ -10,16 +10,16 @@ const projects = (await getCollection("work"))
 // Skills arranged to loosely trace Scorpius — the constellation riding the
 // late-June sky around Rishi's birthday. Positions are a vague silhouette.
 const skills = [
-  { id: "llms", label: "LLMs", x: 21, y: 14, projects: ["neuronote", "navigatio"] },
-  { id: "agents", label: "Agents", x: 10, y: 27, projects: ["navigatio", "neuronote"] },
-  { id: "rag", label: "RAG", x: 28, y: 27, projects: ["navigatio", "neuronote"] },
-  { id: "fastapi", label: "FastAPI", x: 24, y: 42, projects: ["neuronote", "navigatio"] },
-  { id: "graphs", label: "Graph DBs", x: 31, y: 56, projects: ["neuronote"] },
-  { id: "probabilistic", label: "Probabilistic ML", x: 41, y: 68, projects: ["beam-me-up"] },
-  { id: "perf", label: "Numba / perf", x: 53, y: 78, projects: ["beam-me-up"] },
-  { id: "boosting", label: "Gradient boosting", x: 65, y: 80, projects: ["sentinel"] },
-  { id: "features", label: "Feature engineering", x: 75, y: 71, projects: ["sentinel"] },
-  { id: "a11y", label: "Accessibility", x: 82, y: 58, projects: ["navigatio"] },
+  { id: "llms", label: "LLMs", x: 22, y: 16, projects: ["neuronote", "navigatio"] },
+  { id: "agents", label: "Agents", x: 11, y: 30, projects: ["navigatio", "neuronote"] },
+  { id: "rag", label: "RAG", x: 30, y: 30, projects: ["navigatio", "neuronote"] },
+  { id: "fastapi", label: "FastAPI", x: 25, y: 45, projects: ["neuronote", "navigatio"] },
+  { id: "graphs", label: "Graph DBs", x: 33, y: 60, projects: ["neuronote"] },
+  { id: "probabilistic", label: "Probabilistic ML", x: 45, y: 70, ll: true, projects: ["beam-me-up"] },
+  { id: "perf", label: "Numba / perf", x: 58, y: 78, projects: ["beam-me-up"] },
+  { id: "boosting", label: "Gradient boosting", x: 70, y: 73, projects: ["sentinel"] },
+  { id: "features", label: "Feature engineering", x: 80, y: 62, ll: true, projects: ["sentinel"] },
+  { id: "a11y", label: "Accessibility", x: 86, y: 49, ll: true, projects: ["navigatio"] },
 ];
 const edges = [
   ["agents", "rag"], ["llms", "rag"], ["rag", "fastapi"], ["fastapi", "graphs"],
@@ -41,8 +41,8 @@ const dust = [
     <p class="mono eyebrow">Projects</p>
     <h1>Things I've built</h1>
     <p class="prose lead">
-      A sky of skills, shaped like the one I was born under. Tap a star to light
-      up the project where it does the most work.
+      A sky of skills. Tap a star to light up the project where it does the most
+      work.
     </p>
   </section>
 
@@ -59,7 +59,7 @@ const dust = [
       {
         skills.map((s) => (
           <button
-            class="node mono"
+            class:list={["node", "mono", s.ll && "node--lleft"]}
             type="button"
             data-skill={s.id}
             data-projects={s.projects.join(",")}
@@ -75,7 +75,7 @@ const dust = [
         Lit up below <span class="chev" aria-hidden="true">↓</span>
       </p>
     </div>
-    <p class="hint mono" data-hint>10 skills · 4 projects · Scorpius</p>
+    <p class="hint mono" data-hint>10 skills · 4 projects</p>
   </section>
 
   <section class="container cards" data-cards>
@@ -118,7 +118,7 @@ const dust = [
       cards.forEach((c) => c.classList.remove("is-dim", "is-match", "is-primary"));
       edges.forEach((e) => e.classList.remove("is-lit"));
       if (indicator) indicator.hidden = true;
-      if (hint) hint.textContent = "10 skills · 4 projects · Scorpius";
+      if (hint) hint.textContent = "10 skills · 4 projects";
     }
 
     function select(skill: string, btn: HTMLButtonElement) {
@@ -196,31 +196,42 @@ const dust = [
   .node {
     position: absolute;
     transform: translate(-50%, -50%);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
+    display: block;
+    padding: 5px;
     background: none;
     border: 0;
-    padding: 0.25rem 0.35rem;
-    font-size: 0.7rem;
-    color: color-mix(in srgb, var(--on-ink) 78%, transparent);
     cursor: pointer;
-    white-space: nowrap;
-    transition: color 160ms ease;
   }
   .node-dot {
+    display: block;
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
     background: #f7f4ec;
-    flex: none;
     box-shadow: 0 0 6px rgba(247, 244, 236, 0.6);
     transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
   }
-  .node:hover {
+  .node-label {
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 2px);
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    color: color-mix(in srgb, var(--on-ink) 78%, transparent);
+    transition: color 160ms ease;
+  }
+  .node--lleft .node-label {
+    left: auto;
+    right: calc(100% - 2px);
+  }
+  .node:hover .node-label {
     color: var(--on-ink);
   }
-  .node[aria-pressed="true"] {
+  .node:hover .node-dot {
+    transform: scale(1.25);
+  }
+  .node[aria-pressed="true"] .node-label {
     color: var(--marigold);
   }
   .node[aria-pressed="true"] .node-dot {
@@ -296,9 +307,19 @@ const dust = [
     .node {
       position: static;
       transform: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       border: 1px solid rgba(247, 244, 236, 0.25);
       border-radius: 999px;
       padding: 0.3rem 0.6rem;
+    }
+    .node-label,
+    .node--lleft .node-label {
+      position: static;
+      transform: none;
+      left: auto;
+      right: auto;
     }
   }
   @media (prefers-reduced-motion: reduce) {

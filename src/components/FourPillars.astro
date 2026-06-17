@@ -12,6 +12,7 @@ const pillars = [
     title: "The peacock — mayil",
     blurb:
       "Mount of the Tamil deity Murugan and a centuries-old emblem of beauty and artistry across South India.",
+    mine: "I like the solution nobody reached for first. Building, to me, is a craft before it's a deliverable.",
   },
   {
     key: "accountability",
@@ -20,6 +21,7 @@ const pillars = [
     title: "The Maasai shield — olalem",
     blurb:
       "Painted in ochre, red, and white, it marks a warrior's family and age-set — and the duty to guard the community.",
+    mine: "When the stakes are real — security, markets — I want to own what I ship, not just hand it off.",
   },
   {
     key: "authenticity",
@@ -28,6 +30,7 @@ const pillars = [
     title: "The baobab",
     blurb:
       "East Africa's 'tree of life' lives for millennia and anchors the village that gathers beneath it — rooted, and entirely itself.",
+    mine: "I'd rather bring my whole background to the work than sand it down to fit in.",
   },
   {
     key: "wonder",
@@ -36,12 +39,13 @@ const pillars = [
     title: "Rising sun & stars",
     blurb:
       "A rising sun is a pan-African sign of hope and new beginnings; the stars are an invitation to keep looking up.",
+    mine: "Curiosity is the engine. I chase the question before I worry about the answer.",
   },
 ];
 ---
 
 <div class:list={["pillars-wrap", className]}>
-  <div class="pillars" role="group" aria-label="Four symbols — hover and click each to learn its story">
+  <div class="pillars" role="group" aria-label="Four symbols — click each to learn its story">
     {
       pillars.map((p, i) => (
         <button
@@ -51,10 +55,12 @@ const pillars = [
           data-label={p.pillar}
           data-title={p.title}
           data-blurb={p.blurb}
+          data-mine={p.mine}
           aria-label={p.aria}
           aria-expanded="false"
           aria-controls="pillar-card"
         >
+          <span class="cue mono" aria-hidden="true">click me</span>
           {i === 0 && (
             <svg viewBox="0 0 88 88" aria-hidden="true">
               <ellipse cx="44" cy="24" rx="12" ry="16" fill="var(--green)" fill-opacity="0.16" stroke="currentColor" stroke-width="2" />
@@ -113,13 +119,14 @@ const pillars = [
         </button>
       ))
     }
-    <span class="hint mono" data-hint aria-hidden="true">four symbols — tap one</span>
   </div>
 
   <div id="pillar-card" class="card" data-card hidden>
     <p class="mono card-pillar" data-card-pillar></p>
     <p class="card-title" data-card-title></p>
     <p class="card-blurb" data-card-blurb></p>
+    <p class="mono card-mine-label">What it means to me</p>
+    <p class="card-mine" data-card-mine></p>
   </div>
 </div>
 
@@ -131,21 +138,21 @@ const pillars = [
 
     const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>(".pillar"));
     const card = root.querySelector<HTMLElement>("[data-card]");
-    const hint = root.querySelector<HTMLElement>("[data-hint]");
     const elPillar = root.querySelector<HTMLElement>("[data-card-pillar]");
     const elTitle = root.querySelector<HTMLElement>("[data-card-title]");
     const elBlurb = root.querySelector<HTMLElement>("[data-card-blurb]");
-    if (!card || !elPillar || !elTitle || !elBlurb) return;
+    const elMine = root.querySelector<HTMLElement>("[data-card-mine]");
+    if (!card || !elPillar || !elTitle || !elBlurb || !elMine) return;
     let open: string | null = null;
 
     function close() {
       open = null;
       card.hidden = true;
       buttons.forEach((b) => b.setAttribute("aria-expanded", "false"));
-      if (hint) hint.style.opacity = "";
     }
 
     function show(btn: HTMLButtonElement) {
+      btn.classList.remove("cue-on");
       const key = btn.dataset.pillar || "";
       if (open === key) {
         close();
@@ -155,12 +162,24 @@ const pillars = [
       elPillar.textContent = btn.dataset.label || "";
       elTitle.textContent = btn.dataset.title || "";
       elBlurb.textContent = btn.dataset.blurb || "";
+      elMine.textContent = btn.dataset.mine || "";
       card.hidden = false;
       buttons.forEach((b) => b.setAttribute("aria-expanded", String(b === btn)));
-      if (hint) hint.style.opacity = "0";
     }
 
-    buttons.forEach((b) => b.addEventListener("click", () => show(b)));
+    buttons.forEach((b) => {
+      let t: number | undefined;
+      b.addEventListener("mouseenter", () => {
+        t = window.setTimeout(() => b.classList.add("cue-on"), 900);
+      });
+      b.addEventListener("mouseleave", () => {
+        if (t) window.clearTimeout(t);
+        b.classList.remove("cue-on");
+      });
+      b.addEventListener("focus", () => b.classList.add("cue-on"));
+      b.addEventListener("blur", () => b.classList.remove("cue-on"));
+      b.addEventListener("click", () => show(b));
+    });
   }
   wire();
   document.addEventListener("astro:page-load", wire);
@@ -179,6 +198,7 @@ const pillars = [
     flex-wrap: wrap;
   }
   .pillar {
+    position: relative;
     background: none;
     border: 0;
     padding: 0.25rem;
@@ -195,15 +215,29 @@ const pillars = [
   }
   .pillar:hover svg,
   .pillar:focus-visible svg {
-    animation: pillar-shake 500ms ease;
+    animation: pillar-shake 600ms ease;
   }
   .pillar[aria-expanded="true"] svg {
     transform: scale(1.06);
   }
-  .hint {
-    color: var(--ink-mute);
-    font-size: 0.72rem;
-    transition: opacity 200ms ease;
+  .cue {
+    position: absolute;
+    bottom: calc(100% - 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.62rem;
+    padding: 0.18rem 0.45rem;
+    border-radius: 999px;
+    line-height: 1.2;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+  .pillar.cue-on .cue {
+    opacity: 1;
   }
 
   .card {
@@ -224,15 +258,23 @@ const pillars = [
     margin: 0 0 0.35rem;
   }
   .card-blurb {
-    margin: 0;
+    margin: 0 0 var(--space-2);
     color: color-mix(in srgb, var(--ink) 82%, transparent);
+    line-height: 1.5;
+  }
+  .card-mine-label {
+    color: var(--green-soft);
+    margin: 0 0 0.2rem;
+  }
+  .card-mine {
+    margin: 0;
     line-height: 1.5;
   }
 
   @keyframes pillar-shake {
     0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-6deg); }
-    40% { transform: rotate(5deg); }
+    20% { transform: rotate(-7deg); }
+    40% { transform: rotate(6deg); }
     60% { transform: rotate(-4deg); }
     80% { transform: rotate(3deg); }
   }
@@ -241,7 +283,8 @@ const pillars = [
     .pillar:focus-visible svg {
       animation: none;
     }
-    .pillar svg {
+    .pillar svg,
+    .cue {
       transition: none;
     }
   }
