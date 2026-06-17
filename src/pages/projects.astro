@@ -7,26 +7,33 @@ const projects = (await getCollection("work"))
   .filter((e) => e.data.kind === "project")
   .sort((a, b) => a.data.order - b.data.order);
 
-// Skill constellation — each skill maps to projects (by entry id); first = most relevant.
+// Skills arranged to loosely trace Scorpius — the constellation riding the
+// late-June sky around Rishi's birthday. Positions are a vague silhouette.
 const skills = [
-  { id: "llms", label: "LLMs", x: 20, y: 28, projects: ["neuronote", "navigatio"] },
-  { id: "rag", label: "RAG", x: 42, y: 16, projects: ["navigatio", "neuronote"] },
-  { id: "agents", label: "Agents", x: 64, y: 24, projects: ["navigatio", "neuronote"] },
-  { id: "fastapi", label: "FastAPI", x: 30, y: 52, projects: ["neuronote", "navigatio"] },
-  { id: "graphs", label: "Graph DBs", x: 13, y: 70, projects: ["neuronote"] },
-  { id: "probabilistic", label: "Probabilistic ML", x: 74, y: 52, projects: ["beam-me-up"] },
-  { id: "perf", label: "Numba / perf", x: 88, y: 36, projects: ["beam-me-up"] },
-  { id: "boosting", label: "Gradient boosting", x: 62, y: 76, projects: ["sentinel"] },
-  { id: "features", label: "Feature engineering", x: 42, y: 84, projects: ["sentinel"] },
-  { id: "a11y", label: "Accessibility", x: 86, y: 72, projects: ["navigatio"] },
+  { id: "llms", label: "LLMs", x: 21, y: 14, projects: ["neuronote", "navigatio"] },
+  { id: "agents", label: "Agents", x: 10, y: 27, projects: ["navigatio", "neuronote"] },
+  { id: "rag", label: "RAG", x: 28, y: 27, projects: ["navigatio", "neuronote"] },
+  { id: "fastapi", label: "FastAPI", x: 24, y: 42, projects: ["neuronote", "navigatio"] },
+  { id: "graphs", label: "Graph DBs", x: 31, y: 56, projects: ["neuronote"] },
+  { id: "probabilistic", label: "Probabilistic ML", x: 41, y: 68, projects: ["beam-me-up"] },
+  { id: "perf", label: "Numba / perf", x: 53, y: 78, projects: ["beam-me-up"] },
+  { id: "boosting", label: "Gradient boosting", x: 65, y: 80, projects: ["sentinel"] },
+  { id: "features", label: "Feature engineering", x: 75, y: 71, projects: ["sentinel"] },
+  { id: "a11y", label: "Accessibility", x: 82, y: 58, projects: ["navigatio"] },
 ];
-
 const edges = [
-  ["llms", "rag"], ["rag", "agents"], ["llms", "fastapi"], ["fastapi", "graphs"],
-  ["agents", "probabilistic"], ["probabilistic", "perf"], ["probabilistic", "boosting"],
-  ["boosting", "features"], ["agents", "a11y"], ["boosting", "a11y"],
+  ["agents", "rag"], ["llms", "rag"], ["rag", "fastapi"], ["fastapi", "graphs"],
+  ["graphs", "probabilistic"], ["probabilistic", "perf"], ["perf", "boosting"],
+  ["boosting", "features"], ["features", "a11y"],
 ];
 const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
+
+// Scattered background stars (vague sky dust)
+const dust = [
+  [6, 12], [14, 48], [9, 64], [18, 82], [35, 10], [44, 38], [38, 88],
+  [52, 18], [58, 50], [49, 60], [66, 14], [70, 44], [88, 24], [92, 70],
+  [80, 88], [60, 92], [33, 74], [27, 16], [86, 40], [16, 36], [70, 62],
+];
 ---
 
 <BaseLayout title="Projects — Rishi Srikaanth" description="Selected projects, explorable by skill.">
@@ -34,23 +41,18 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
     <p class="mono eyebrow">Projects</p>
     <h1>Things I've built</h1>
     <p class="prose lead">
-      Tap a skill in the constellation to light up the project where it does the
-      most work.
+      A sky of skills, shaped like the one I was born under. Tap a star to light
+      up the project where it does the most work.
     </p>
   </section>
 
   <section class="container">
-    <div class="constellation" data-constellation>
+    <div class="sky" data-constellation>
       <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {dust.map(([x, y]) => <circle class="dust" cx={x} cy={y} r="0.35" />)}
         {
           edges.map(([a, b]) => (
-            <line
-              x1={pos[a].x}
-              y1={pos[a].y}
-              x2={pos[b].x}
-              y2={pos[b].y}
-              data-edge={`${a} ${b}`}
-            />
+            <line x1={pos[a].x} y1={pos[a].y} x2={pos[b].x} y2={pos[b].y} data-edge={`${a} ${b}`} />
           ))
         }
       </svg>
@@ -69,8 +71,11 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
           </button>
         ))
       }
+      <p class="seebelow mono" data-indicator hidden aria-live="polite">
+        Lit up below <span class="chev" aria-hidden="true">↓</span>
+      </p>
     </div>
-    <p class="hint mono" data-hint>10 skills · 4 projects</p>
+    <p class="hint mono" data-hint>10 skills · 4 projects · Scorpius</p>
   </section>
 
   <section class="container cards" data-cards>
@@ -98,6 +103,7 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
     const root = document.querySelector<HTMLElement>("[data-constellation]");
     const cardsWrap = document.querySelector<HTMLElement>("[data-cards]");
     const hint = document.querySelector<HTMLElement>("[data-hint]");
+    const indicator = document.querySelector<HTMLElement>("[data-indicator]");
     if (!root || !cardsWrap || root.dataset.wired) return;
     root.dataset.wired = "1";
 
@@ -111,7 +117,8 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
       nodes.forEach((n) => n.setAttribute("aria-pressed", "false"));
       cards.forEach((c) => c.classList.remove("is-dim", "is-match", "is-primary"));
       edges.forEach((e) => e.classList.remove("is-lit"));
-      if (hint) hint.textContent = "10 skills · 4 projects";
+      if (indicator) indicator.hidden = true;
+      if (hint) hint.textContent = "10 skills · 4 projects · Scorpius";
     }
 
     function select(skill: string, btn: HTMLButtonElement) {
@@ -133,7 +140,9 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
         const pair = (e.dataset.edge || "").split(" ");
         e.classList.toggle("is-lit", pair.includes(skill));
       });
-      if (hint) hint.textContent = `${btn.textContent?.trim()} → ${projects.length} project${projects.length > 1 ? "s" : ""}`;
+      if (indicator) indicator.hidden = false;
+      if (hint)
+        hint.textContent = `${btn.textContent?.trim()} → ${projects.length} project${projects.length > 1 ? "s" : ""}`;
     }
 
     nodes.forEach((n) => n.addEventListener("click", () => select(n.dataset.skill || "", n)));
@@ -156,14 +165,14 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
     margin-top: var(--space-2);
   }
 
-  .constellation {
+  .sky {
     position: relative;
-    height: 360px;
+    height: 380px;
     margin-top: var(--space-2);
-    border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--paper) 50%, transparent);
+    border-radius: 14px;
+    background: radial-gradient(120% 140% at 70% 0%, #1d3a30 0%, #122019 60%, #0d1712 100%);
     overflow: hidden;
+    color: var(--on-ink);
   }
   .lines {
     position: absolute;
@@ -171,9 +180,13 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
     width: 100%;
     height: 100%;
   }
+  .dust {
+    fill: #f7f4ec;
+    opacity: 0.35;
+  }
   .lines line {
-    stroke: color-mix(in srgb, var(--ink) 22%, transparent);
-    stroke-width: 0.3;
+    stroke: rgba(247, 244, 236, 0.22);
+    stroke-width: 0.25;
     transition: stroke 200ms ease, stroke-width 200ms ease;
   }
   .lines line.is-lit {
@@ -186,36 +199,53 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    background: var(--paper);
-    border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-    border-radius: 999px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.72rem;
-    color: var(--ink-mute);
+    background: none;
+    border: 0;
+    padding: 0.25rem 0.35rem;
+    font-size: 0.7rem;
+    color: color-mix(in srgb, var(--on-ink) 78%, transparent);
     cursor: pointer;
-    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
     white-space: nowrap;
+    transition: color 160ms ease;
   }
   .node-dot {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: var(--green-soft);
+    background: #f7f4ec;
     flex: none;
-    transition: background 160ms ease, transform 160ms ease;
+    box-shadow: 0 0 6px rgba(247, 244, 236, 0.6);
+    transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
   }
   .node:hover {
-    border-color: var(--ink);
-    color: var(--ink);
+    color: var(--on-ink);
   }
   .node[aria-pressed="true"] {
-    background: var(--marigold);
-    border-color: var(--ink);
-    color: var(--ink);
+    color: var(--marigold);
   }
   .node[aria-pressed="true"] .node-dot {
-    background: var(--vermilion);
-    transform: scale(1.3);
+    background: var(--marigold);
+    box-shadow: 0 0 12px 2px rgba(244, 176, 25, 0.8);
+    transform: scale(1.5);
+  }
+  .seebelow {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    transform: translateX(-50%);
+    margin: 0;
+    color: var(--marigold);
+    background: rgba(13, 23, 18, 0.7);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+  }
+  .seebelow .chev {
+    display: inline-block;
+    animation: bob 1s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
   }
   .hint {
     color: var(--ink-mute);
@@ -253,12 +283,12 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
   }
 
   @media (max-width: 720px) {
-    .constellation {
+    .sky {
       height: auto;
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      padding: var(--space-3);
+      padding: var(--space-3) var(--space-3) calc(var(--space-3) + 2rem);
     }
     .lines {
       display: none;
@@ -266,10 +296,15 @@ const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
     .node {
       position: static;
       transform: none;
-      font-size: 0.7rem;
+      border: 1px solid rgba(247, 244, 236, 0.25);
+      border-radius: 999px;
+      padding: 0.3rem 0.6rem;
     }
   }
   @media (prefers-reduced-motion: reduce) {
+    .seebelow .chev {
+      animation: none;
+    }
     .proj-card,
     .node,
     .node-dot,

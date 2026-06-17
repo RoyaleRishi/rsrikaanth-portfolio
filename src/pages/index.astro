@@ -20,25 +20,9 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
 <BaseLayout title="Rishi Srikaanth — AI Engineer">
   <section class="hero container">
-    <div class="hero-text">
-      <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
-      <h1>Rishi<br />Srikaanth</h1>
-    </div>
-    <div class="hero-mark">
-      <FourPillars />
-    </div>
-    <div class="lead">
-      <p>
-        I design and deploy machine-learning pipelines — high-throughput data
-        systems and production-grade APIs in <span class="mark">Python and AWS</span>.
-        I'm an M.S. AI student at Northeastern and the incoming AI Engineer
-        intern at FINRA, on GenAI for the Office of the Chief Data Officer.
-      </p>
-      <p>
-        I play chess and tennis, sing along to whatever's playing, and I care
-        about cultural equity, socio-economic questions, and AI safety.
-      </p>
-    </div>
+    <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
+    <h1>Rishi<br />Srikaanth</h1>
+    <FourPillars />
   </section>
 
   <section class="band block-marigold">
@@ -109,38 +93,14 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
 <style>
   .hero {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    column-gap: var(--space-4);
     padding-block: var(--space-5) var(--space-4);
-  }
-  .hero-mark {
-    justify-self: end;
   }
   .eyebrow {
     color: var(--marigold-ink);
     margin: 0 0 var(--space-2);
   }
-  .lead {
-    grid-column: 1 / -1;
-    max-width: 36em;
-    margin-top: var(--space-3);
-  }
-  .lead p {
-    font-size: 1.3rem;
-    line-height: 1.6;
-    margin-bottom: var(--space-2);
-  }
-  @media (max-width: 720px) {
-    .hero {
-      grid-template-columns: 1fr;
-    }
-    .hero-mark {
-      justify-self: start;
-      order: -1;
-      margin-bottom: var(--space-3);
-    }
+  .hero h1 {
+    margin-bottom: var(--space-4);
   }
 
   .band {
