@@ -1,33 +1,47 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const facts = [
+  "M.S. Artificial Intelligence — Northeastern · GPA 4.0",
+  "B.Tech Computer Science — VIT University",
+  "Based in Boston, MA",
+];
 ---
 
 <BaseLayout
   title="About — Rishi Srikaanth"
-  description="Raised between Nairobi and Tamil Nadu, now building AI in Boston."
+  description="AI engineer in Boston. Roots in Kenya and Tamil Nadu. Interested in AI safety and cultural equity."
 >
   <section class="container about">
     <div class="portrait">
       <img src="/images/portrait.svg" alt="Portrait of Rishi Srikaanth" width="800" height="1000" />
+      <ul class="facts">
+        {facts.map((f) => <li class="mono">{f}</li>)}
+      </ul>
     </div>
-    <div class="prose body">
-      <h1>About</h1>
-      <p>
-        I grew up between Nairobi and Tamil Nadu, studied in India, and now build
-        AI systems in Boston. Carrying more than one place inside you changes how
-        you see a problem — you assume there's always another vantage point you
-        haven't taken yet.
-      </p>
-      <p>
-        I'm drawn to AI safety and to the quieter question underneath it: who
-        gets to benefit, and who pays. Cultural equity and the way class shapes
-        access aren't side interests for me — they're the lens I bring to the work.
-      </p>
-      <p>
-        Away from the screen I play chess for the long quiet think, tennis for the
-        opposite, and I sing — which is its own kind of pattern-matching. They all
-        leak back into how I build.
-      </p>
+
+    <div class="body">
+      <p class="mono eyebrow">About</p>
+      <h1>Hi, I'm Rishi.</h1>
+      <div class="prose">
+        <p>
+          I'm an AI engineer. I design and deploy machine-learning pipelines —
+          data systems and production-grade APIs in Python and AWS — and I'm
+          finishing my M.S. in AI at Northeastern.
+        </p>
+        <p>
+          My roots run through <span class="mark">Kenya and Tamil Nadu</span>.
+          A multicultural perspective is probably the most useful thing I bring
+          to a problem: I assume there's always another vantage point worth
+          taking. It's part of who I am, but it isn't the whole of it.
+        </p>
+        <p>
+          I'd happily talk for hours about progressing cultural equity and
+          socio-economic concerns in and with technology — especially AI safety.
+          That's the work I want to stay close to.
+        </p>
+        <p>For fun, I play chess and tennis, and I love to sing along as I listen to music.</p>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -38,15 +52,33 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     gap: var(--space-4);
     padding-block: var(--space-5);
   }
-  @media (min-width: 48rem) {
+  @media (min-width: 52rem) {
     .about {
-      grid-template-columns: 0.8fr 1.2fr;
+      grid-template-columns: 0.85fr 1.15fr;
       gap: var(--space-5);
       align-items: start;
     }
   }
   .portrait img {
-    border-radius: 4px;
-    filter: grayscale(0.15);
+    border-radius: 6px;
+    filter: grayscale(0.1);
+    border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+  .facts {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .facts li {
+    color: var(--ink-mute);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 0.82rem;
+  }
+  .eyebrow {
+    color: var(--marigold-ink);
+    margin: 0 0 var(--space-2);
   }
 </style>

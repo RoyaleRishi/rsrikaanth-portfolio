@@ -1,11 +1,13 @@
 ---
 title: AI Engineer Intern
 kind: role
-context: RoonCyber
-summary: Built LLM-driven tooling for security workflows.
-why: I wanted to see how AI holds up where the stakes are real and adversarial.
-tech: ["Python", "LLMs"]
-order: 2
+org: RoonCyber Inc.
+period: Aug–Dec 2025
+summary: Built risk-scoring and anomaly detection to help security teams act on what matters first.
+bullets:
+  - Built a risk-scoring model combining CVSS and asset criticality to prioritize remediation — cut MTTR by 20%.
+  - Designed and deployed an Isolation Forest anomaly detector for GuardDuty/Macie logs — cut incident response time 30% across 100K+ event streams.
+  - Prototyped an agentic AI system that surfaces risk-scoring insight by querying the database and LLMs.
+tech: ["Python", "LLMs", "AWS", "Anomaly detection"]
+order: 1
 ---
-
-Placeholder — Rishi to refine the specifics and impact.

@@ -8,29 +8,55 @@ const essays = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 );
 ---
 
-<BaseLayout title="Writing — Rishi Srikaanth" description="Essays.">
+<BaseLayout title="Writing — Rishi Srikaanth" description="Essays by Rishi Srikaanth.">
+  <section class="container head-block">
+    <p class="mono eyebrow">Writing</p>
+    <h1>Notes & essays</h1>
+  </section>
+
   <section class="container">
-    <h1>Writing</h1>
-    <p class="prose lede">Occasional essays — usually where my interests collide.</p>
-    <div>
-      {
-        essays.map((e) => (
-          <EssayCard
-            title={e.data.title}
-            description={e.data.description}
-            pubDate={e.data.pubDate}
-            href={`/writing/${e.id}`}
-          />
-        ))
-      }
-    </div>
+    {
+      essays.length > 0 ? (
+        <div>
+          {essays.map((e) => (
+            <EssayCard
+              title={e.data.title}
+              description={e.data.description}
+              pubDate={e.data.pubDate}
+              href={`/writing/${e.id}`}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="empty">
+          <p class="prose">
+            I'm working on the first few pieces — most likely on AI safety and
+            cultural equity in tech, the things I'd talk your ear off about in
+            person. Check back soon.
+          </p>
+          <a class="link mono" href="mailto:srikaanth.r@northeastern.edu">
+            Or just email me <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>
 
 <style>
-  .lede {
-    color: var(--ink-soft);
-    font-size: 1.2rem;
-    margin-bottom: var(--space-4);
+  .head-block {
+    padding-block: var(--space-5) var(--space-3);
+  }
+  .eyebrow {
+    color: var(--marigold-ink);
+    margin: 0 0 var(--space-2);
+  }
+  .empty {
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    padding-top: var(--space-4);
+  }
+  .empty .prose p {
+    font-size: 1.3rem;
+    color: var(--ink-mute);
   }
 </style>

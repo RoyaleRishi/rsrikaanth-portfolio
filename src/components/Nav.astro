@@ -9,12 +9,14 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
 ---
 
 <nav class="nav container" aria-label="Primary">
-  <a href="/" class="wordmark">Rishi Srikaanth</a>
+  <a href="/" class="wordmark">
+    <span class="dot" aria-hidden="true"></span>Rishi Srikaanth
+  </a>
   <ul>
     {
       links.map((l) => (
         <li>
-          <a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
+          <a class="mono" href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
             {l.label}
           </a>
         </li>
@@ -26,14 +28,26 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
 <style>
   .nav {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     padding-block: var(--space-3);
+    gap: var(--space-2);
   }
   .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
     font-family: var(--font-display);
+    font-weight: 700;
     font-size: 1.15rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+  }
+  .dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--marigold);
+    flex: none;
   }
   ul {
     display: flex;
@@ -43,11 +57,16 @@ const isActive = (href: string) => pathname === href || pathname.startsWith(href
     padding: 0;
   }
   ul a {
-    color: var(--ink-soft);
-    transition: color 180ms ease;
+    color: var(--ink-mute);
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 160ms ease, border-color 160ms ease;
   }
-  ul a:hover,
+  ul a:hover {
+    color: var(--ink);
+  }
   ul a[aria-current="page"] {
     color: var(--ink);
+    border-color: var(--marigold);
   }
 </style>

@@ -4,11 +4,14 @@ import { glob } from "astro/loaders";
 export const workSchema = z.object({
   title: z.string(),
   kind: z.enum(["role", "project"]),
-  context: z.string().optional(),
+  org: z.string().optional(),
+  period: z.string(),
   summary: z.string(),
-  why: z.string(),
+  bullets: z.array(z.string()).default([]),
   tech: z.array(z.string()).default([]),
-  link: z.string().url().optional(),
+  links: z
+    .array(z.object({ label: z.string(), href: z.string().url() }))
+    .default([]),
   order: z.number(),
 });
 

@@ -8,40 +8,69 @@ const links = [
 ];
 ---
 
-<footer class="footer container">
-  <p class="grace" lang="mul">Nairobi · சென்னை · Boston</p>
-  <ul>
-    {links.map((l) => (
-      <li><a class="link" href={l.href}>{l.label}</a></li>
-    ))}
-  </ul>
-  <p class="fine">© {year} Rishi Srikaanth · <span lang="sw">Karibu</span> / <span lang="ta">வணக்கம்</span></p>
+<footer class="footer block-ink">
+  <div class="container inner">
+    <p class="grace" lang="mul">Nairobi <span aria-hidden="true">·</span> சென்னை <span aria-hidden="true">·</span> Boston</p>
+    <p class="welcome mono">
+      <span lang="sw">Karibu</span> <span aria-hidden="true">/</span> <span lang="ta">வணக்கம்</span> <span aria-hidden="true">/</span> Welcome
+    </p>
+    <ul>
+      {links.map((l) => (
+        <li><a class="foot-link" href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+    <p class="fine mono">© {year} Rishi Srikaanth</p>
+  </div>
 </footer>
 
 <style>
   .footer {
-    border-top: 0.5px solid color-mix(in srgb, var(--ink) 18%, transparent);
-    margin-top: var(--space-6);
-    padding-block: var(--space-4) var(--space-5);
+    margin-top: var(--space-7);
+    padding-block: var(--space-5) var(--space-4);
+  }
+  .inner {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-3);
   }
   .grace {
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
     margin: 0;
+  }
+  .grace span {
+    color: var(--marigold);
+  }
+  .welcome {
+    color: var(--marigold);
+    margin: 0;
+  }
+  .welcome span[lang] {
+    color: var(--on-ink);
   }
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    gap: var(--space-2) var(--space-4);
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin: var(--space-2) 0 0;
+    padding: var(--space-3) 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--on-ink) 20%, transparent);
+  }
+  .foot-link {
+    font-size: 1.05rem;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 160ms ease;
+  }
+  .foot-link:hover,
+  .foot-link:focus-visible {
+    border-color: var(--marigold);
   }
   .fine {
-    color: var(--ink-soft);
-    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--on-ink) 60%, transparent);
     margin: 0;
   }
 </style>

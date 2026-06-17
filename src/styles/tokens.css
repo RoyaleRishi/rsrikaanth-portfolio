@@ -1,24 +1,29 @@
 :root {
-  --paper: #f4efe6;
-  --ink: #1f1b16;
-  --ink-soft: #5f5e5a;
-  --brick: #b33a26;
-  --green: #2e5e3a;
-  --ochre: #d89a3b;
-  --ochre-ink: #8f5e10;
-  --maroon: #6e2233;
+  /* Pulli palette — campaign-poster confidence, lensed through class */
+  --paper: #f7f4ec;
+  --paper-deep: #efe9da;
+  --ink: #161410;
+  --ink-soft: #57534420;
+  --ink-mute: #5f5a49;
+  --marigold: #f4b019;
+  --marigold-ink: #6b4905; /* marigold dark, for text on paper that needs AA */
+  --green: #15402c;
+  --green-soft: #1d5238;
+  --vermilion: #d6452b;
+  --on-ink: #f7f4ec;
 
-  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
   --font-body: "Inter Variable", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
 
-  --measure: 66ch;
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
   --space-5: 4rem;
   --space-6: 6rem;
+  --space-7: 9rem;
 
-  --content-max: 72rem;
-  --prose-max: 38rem;
+  --content-max: 76rem;
+  --prose-max: 40rem;
 }

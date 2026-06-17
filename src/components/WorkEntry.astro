@@ -1,60 +1,122 @@
 ---
+interface Link {
+  label: string;
+  href: string;
+}
 interface Props {
   title: string;
-  context?: string;
+  org?: string;
+  period: string;
   summary: string;
-  why: string;
-  tech: string[];
-  link?: string;
+  bullets?: string[];
+  tech?: string[];
+  links?: Link[];
 }
-const { title, context, summary, why, tech, link } = Astro.props;
+const { title, org, period, summary, bullets = [], tech = [], links = [] } = Astro.props;
 ---
 
 <article class="entry">
-  <header>
-    <h3>{title}</h3>
-    {context && <p class="context">{context}</p>}
-  </header>
+  <div class="meta">
+    <span class="mono org">{org}</span>
+    <span class="mono period">{period}</span>
+  </div>
+  <h3>{title}</h3>
   <p class="summary">{summary}</p>
-  <p class="why">{why}</p>
   {
-    tech.length > 0 && (
-      <ul class="tech">
-        {tech.map((t) => <li>{t}</li>)}
+    bullets.length > 0 && (
+      <ul class="bullets">
+        {bullets.map((b) => (
+          <li>
+            <span class="pip" aria-hidden="true" /> {b}
+          </li>
+        ))}
       </ul>
     )
   }
-  {link && <a class="link" href={link}>View project →</a>}
+  <div class="foot">
+    {tech.length > 0 && <p class="mono tech">{tech.join("  ·  ")}</p>}
+    {
+      links.length > 0 && (
+        <p class="links">
+          {links.map((l) => (
+            <a class="link" href={l.href}>
+              {l.label} <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </p>
+      )
+    }
+  </div>
 </article>
 
 <style>
   .entry {
     padding-block: var(--space-4);
-    border-top: 0.5px solid color-mix(in srgb, var(--ink) 15%, transparent);
-    display: grid;
-    gap: var(--space-1);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
   }
-  .context {
-    color: var(--brick);
-    font-size: 0.95rem;
-    margin: 0;
-  }
-  .summary {
-    font-size: 1.15rem;
-    margin: var(--space-1) 0 0;
-  }
-  .why {
-    color: var(--ink-soft);
-    max-width: var(--prose-max);
-  }
-  .tech {
+  .meta {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+  .org {
+    color: var(--green-soft);
+  }
+  .period {
+    color: var(--ink-mute);
+  }
+  h3 {
+    margin: 0 0 var(--space-1);
+  }
+  .summary {
+    font-size: 1.2rem;
+    max-width: var(--prose-max);
+    margin: 0 0 var(--space-2);
+  }
+  .bullets {
     list-style: none;
+    margin: 0 0 var(--space-3);
     padding: 0;
-    margin: var(--space-1) 0 0;
-    font-size: 0.85rem;
-    color: var(--ink-soft);
+    display: grid;
+    gap: var(--space-1);
+    max-width: 46rem;
+  }
+  .bullets li {
+    display: flex;
+    gap: 0.7rem;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--ink) 82%, transparent);
+  }
+  .pip {
+    margin-top: 0.55em;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--marigold);
+    flex: none;
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-3);
+  }
+  .tech {
+    color: var(--ink-mute);
+    margin: 0;
+  }
+  .links {
+    display: flex;
+    gap: var(--space-3);
+    margin: 0;
+  }
+  .links .link {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
   }
 </style>

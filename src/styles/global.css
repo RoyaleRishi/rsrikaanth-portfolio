@@ -1,5 +1,6 @@
-@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/bricolage-grotesque";
 @import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
 @import "./tokens.css";
 
 *,
@@ -18,7 +19,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1.0625rem;
-  line-height: 1.65;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -27,20 +28,22 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 480;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
   margin: 0 0 var(--space-2);
+  font-weight: 700;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-size: clamp(3rem, 9vw, 6.5rem);
 }
 h2 {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(2rem, 5vw, 3.25rem);
 }
 h3 {
-  font-size: 1.35rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 a {
@@ -58,6 +61,7 @@ img {
   display: block;
 }
 
+/* ── Layout ── */
 .container {
   max-width: var(--content-max);
   margin-inline: auto;
@@ -67,25 +71,57 @@ img {
 .prose {
   max-width: var(--prose-max);
 }
-.prose p,
-.prose li {
-  font-size: 1.125rem;
-  line-height: 1.75;
+.prose p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: var(--space-3);
 }
 
+/* ── Mono utility (labels, dates, metrics) ── */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Marigold highlight under inline phrases ── */
+.mark {
+  box-shadow: inset 0 -0.45em 0 rgba(244, 176, 25, 0.5);
+}
+
+/* ── Color-block sections ── */
+.block-ink {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.block-marigold {
+  background: var(--marigold);
+  color: var(--ink);
+}
+.block-green {
+  background: var(--green);
+  color: var(--on-ink);
+}
+.hairline {
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+/* ── Animated underline links ── */
 .link {
-  background-image: linear-gradient(var(--brick), var(--brick));
+  background-image: linear-gradient(var(--vermilion), var(--vermilion));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: 0% 1.5px;
+  background-size: 0% 2px;
   transition: background-size 220ms ease;
-  padding-bottom: 1px;
+  padding-bottom: 2px;
 }
 .link:hover,
 .link:focus-visible {
-  background-size: 100% 1.5px;
+  background-size: 100% 2px;
 }
 
+/* ── Accessibility ── */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -97,7 +133,6 @@ img {
   white-space: nowrap;
   border: 0;
 }
-
 .sr-only:focus,
 .sr-only:focus-visible {
   position: fixed;
@@ -110,12 +145,12 @@ img {
   padding: var(--space-1) var(--space-2);
   clip: auto;
   background: var(--ink);
-  color: var(--paper);
+  color: var(--on-ink);
   border-radius: 4px;
 }
 
 :focus-visible {
-  outline: 2px solid var(--maroon);
+  outline: 3px solid var(--vermilion);
   outline-offset: 3px;
 }
 
@@ -127,6 +162,7 @@ img {
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
 }

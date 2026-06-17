@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WorkEntry from "../components/WorkEntry.astro";
+import KolamMark from "../components/KolamMark.astro";
 
 const featured = (await getCollection("work"))
   .sort((a, b) => a.data.order - b.data.order)
@@ -14,26 +15,52 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
 <BaseLayout title="Rishi Srikaanth — AI Engineer">
   <section class="hero container">
-    <p class="eyebrow">AI Engineer</p>
-    <h1>Rishi Srikaanth</h1>
-    <p class="prose intro">
-      I build AI systems and think a lot about who they're for. Raised between
-      Nairobi and Tamil Nadu, now in Boston — I care about AI safety, cultural
-      equity, and the questions class quietly asks of technology.
-    </p>
+    <div class="hero-text">
+      <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
+      <h1>Rishi<br />Srikaanth</h1>
+    </div>
+    <div class="hero-mark">
+      <KolamMark size={220} />
+    </div>
+    <div class="lead">
+      <p>
+        I design and deploy machine-learning pipelines — high-throughput data
+        systems and production-grade APIs in <span class="mark">Python and AWS</span>.
+        I'm an M.S. AI student at Northeastern and the incoming AI Engineer
+        intern at FINRA, on GenAI for the Office of the Chief Data Officer.
+      </p>
+      <p>
+        I play chess and tennis, sing along to whatever's playing, and I care
+        about cultural equity, socio-economic questions, and AI safety.
+      </p>
+    </div>
   </section>
 
-  <section class="container">
-    <div class="head"><h2>Selected work</h2><a class="link" href="/work">All work →</a></div>
+  <section class="band block-marigold">
+    <div class="container">
+      <p class="mono band-label">What I care about</p>
+      <p class="band-line">
+        Technology that takes <strong>cultural equity</strong> and
+        <strong>AI safety</strong> as seriously as it takes performance.
+      </p>
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="head">
+      <h2>Selected work</h2>
+      <a class="mono more" href="/work">All work <span aria-hidden="true">→</span></a>
+    </div>
     {
       featured.map((e) => (
         <WorkEntry
           title={e.data.title}
-          context={e.data.context}
+          org={e.data.org}
+          period={e.data.period}
           summary={e.data.summary}
-          why={e.data.why}
+          bullets={e.data.bullets}
           tech={e.data.tech}
-          link={e.data.link}
+          links={e.data.links}
         />
       ))
     }
@@ -41,9 +68,14 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
   {
     latest && (
-      <section class="container latest">
-        <div class="head"><h2>Writing</h2><a class="link" href="/writing">All essays →</a></div>
-        <a class="latest-link" href={`/writing/${latest.id}`}>
+      <section class="container section">
+        <div class="head">
+          <h2>Writing</h2>
+          <a class="mono more" href="/writing">
+            All essays <span aria-hidden="true">→</span>
+          </a>
+        </div>
+        <a class="latest" href={`/writing/${latest.id}`}>
           <h3>{latest.data.title}</h3>
           <p>{latest.data.description}</p>
         </a>
@@ -54,35 +86,91 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 
 <style>
   .hero {
-    padding-block: var(--space-6) var(--space-5);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: var(--space-4);
+    padding-block: var(--space-5) var(--space-4);
+  }
+  .hero-mark {
+    color: var(--ink);
+    justify-self: end;
   }
   .eyebrow {
-    color: var(--ochre-ink);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-size: 0.8rem;
+    color: var(--marigold-ink);
     margin: 0 0 var(--space-2);
   }
-  .intro {
-    font-size: 1.3rem;
-    color: var(--ink-soft);
+  .lead {
+    grid-column: 1 / -1;
+    max-width: 36em;
     margin-top: var(--space-3);
+  }
+  .lead p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-2);
+  }
+  @media (max-width: 640px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+    .hero-mark {
+      justify-self: start;
+      order: -1;
+      margin-bottom: var(--space-2);
+    }
+  }
+
+  .band {
+    margin-top: var(--space-4);
+    padding-block: var(--space-5);
+  }
+  .band-label {
+    margin: 0 0 var(--space-2);
+    color: color-mix(in srgb, var(--ink) 62%, transparent);
+  }
+  .band-line {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+    margin: 0;
+  }
+
+  .section {
+    padding-top: var(--space-5);
   }
   .head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-top: var(--space-5);
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
   }
-  .latest-link h3 {
-    margin: var(--space-2) 0 var(--space-1);
-    transition: color 180ms ease;
+  .more {
+    color: var(--ink-mute);
   }
-  .latest-link:hover h3 {
-    color: var(--brick);
+  .more:hover {
+    color: var(--ink);
   }
-  .latest-link p {
-    color: var(--ink-soft);
+  .latest {
+    display: block;
+    padding-top: var(--space-3);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+  .latest h3 {
+    margin: 0 0 var(--space-1);
+    transition: color 160ms ease;
+  }
+  .latest:hover h3 {
+    color: var(--vermilion);
+  }
+  .latest p {
+    color: var(--ink-mute);
     max-width: var(--prose-max);
+    margin: 0;
   }
+
 </style>
