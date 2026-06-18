@@ -8,7 +8,7 @@ const projects = (await getCollection("work"))
   .filter((e) => e.data.kind === "project")
   .sort((a, b) => a.data.order - b.data.order);
 
-// Skills arranged to loosely trace Scorpius — the constellation riding the
+// Skills arranged to loosely trace Scorpius: the constellation riding the
 // late-June sky around Rishi's birthday. Positions are a vague silhouette.
 const skills = [
   { id: "llms", label: "LLMs", x: 22, y: 16, projects: ["neuronote", "navigatio"] },
@@ -37,7 +37,7 @@ const dust = [
 ];
 ---
 
-<BaseLayout title="Projects — Rishi Srikaanth" description="Selected projects, explorable by skill.">
+<BaseLayout title="Projects: Rishi Srikaanth" description="Selected projects, explorable by skill.">
   <section class="container head-block">
     <Doodle name="food" size={62} style="top:2rem; right:6%; transform:rotate(8deg);" />
     <p class="mono eyebrow">Projects</p>

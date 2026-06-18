@@ -24,7 +24,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Parchment grain — subtle fibrous paper texture over the base color */
+/* Parchment grain, subtle fibrous paper texture over the base color */
 body::before {
   content: "";
   position: fixed;

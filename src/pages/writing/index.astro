@@ -9,7 +9,7 @@ const essays = (await getCollection("writing", ({ data }) => !data.draft)).sort(
 );
 ---
 
-<BaseLayout title="Writing — Rishi Srikaanth" description="Essays by Rishi Srikaanth.">
+<BaseLayout title="Writing: Rishi Srikaanth" description="Essays by Rishi Srikaanth.">
   <section class="container head-block">
     <Doodle name="chess" size={64} style="top:2rem; right:7%; transform:rotate(-7deg);" />
     <p class="mono eyebrow">Writing</p>
@@ -32,8 +32,8 @@ const essays = (await getCollection("writing", ({ data }) => !data.draft)).sort(
       ) : (
         <div class="empty">
           <p class="prose">
-            I'm working on the first few pieces — most likely on AI safety and
-            cultural equity in tech, the things I'd talk your ear off about in
+            I'm working on the first few pieces: most likely on AI safety and
+            equity in tech, the things I'd talk your ear off about in
             person. Check back soon.
           </p>
           <a class="link mono" href="mailto:srikaanth.r@northeastern.edu">
