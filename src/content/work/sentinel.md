@@ -9,6 +9,6 @@ bullets:
   - Lifted predictive performance by 15% through PCA/LDA feature engineering on telemetry datasets of millions of records.
 tech: ["LightGBM", "XGBoost", "PCA/LDA"]
 links:
-  - { label: "GitHub", href: "https://github.com/RoyaleRishi" }
+  - { label: "GitHub", href: "https://github.com/RoyaleRishi/Malware-Detection-on-Windows_Telemetry-Data" }
 order: 8
 ---

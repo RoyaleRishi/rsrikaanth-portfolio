@@ -9,6 +9,6 @@ bullets:
   - Production-style backend with graph APIs, media and export workflows, migration-first schema management, CI-style validation, and extensive unit and integration coverage.
 tech: ["FastAPI", "PostgreSQL", "Apache AGE", "pgvector", "Alembic", "Docker"]
 links:
-  - { label: "GitHub", href: "https://github.com/RoyaleRishi" }
+  - { label: "GitHub", href: "https://github.com/RoyaleRishi/NeuroNote" }
 order: 2
 ---

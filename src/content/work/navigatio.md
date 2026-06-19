@@ -9,6 +9,6 @@ bullets:
   - Engineered an accessibility-first UI with 100% screen-reader compatibility and 0–10 safety scoring to keep it usable for diverse populations.
 tech: ["Gemini", "FastAPI", "RAG"]
 links:
-  - { label: "GitHub", href: "https://github.com/RoyaleRishi" }
+  - { label: "GitHub", href: "https://github.com/RoyaleRishi/Navigatio" }
 order: 6
 ---

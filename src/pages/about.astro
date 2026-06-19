@@ -16,7 +16,7 @@ const facts = [
   <section class="container about">
     <Doodle name="tennis" size={70} style="bottom:1rem; left:1%; transform:rotate(-8deg);" />
     <div class="portrait">
-      <img src="/images/portrait.svg" alt="Portrait of Rishi Srikaanth" width="800" height="1000" />
+      <img src="/images/portrait.jpg" alt="Rishi Srikaanth" width="1000" height="1150" />
       <ul class="facts">
         {facts.map((f) => <li class="mono">{f}</li>)}
       </ul>
@@ -62,8 +62,12 @@ const facts = [
     }
   }
   .portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 25%;
     border-radius: 6px;
-    filter: grayscale(0.1);
+    filter: grayscale(0.08);
     border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
   }
   .facts {
