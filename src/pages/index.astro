@@ -20,34 +20,37 @@ const facts = [
   </section>
 
   <section class="container about">
-    <Doodle name="chess" size={60} style="top:1rem; right:3%; transform:rotate(-7deg);" />
-    <div class="portrait">
-      <img src="/images/portrait.jpg" alt="Rishi Srikaanth" width="1000" height="1150" />
-      <ul class="facts">
-        {facts.map((f) => <li class="mono">{f}</li>)}
-      </ul>
-    </div>
-
-    <div class="body">
-      <p class="mono eyebrow">A bit about me</p>
-      <div class="prose">
-        <p>
-          I'm an AI engineer finishing my M.S. in AI at Northeastern. I design and
-          deploy machine-learning pipelines — data systems and production-grade APIs.
-        </p>
-        <p>
-          My roots run through <span class="mark">Kenya and India</span>. A
-          multicultural perspective is probably the most pivotal thing I bring to
-          my problem solving: I assume there's always another vantage point worth
-          taking.
-        </p>
-        <p>
-          I'd happily talk for hours about progressing cultural equity and
-          addressing socio-economic concerns in and with technology — especially
-          AI safety. That's the work I want to stay close to.
-        </p>
-        <p>For fun, I play chess and tennis, and I love to sing along as I listen to music.</p>
+    <Doodle name="chess" size={58} style="top:1.5rem; right:3%; transform:rotate(-7deg);" />
+    <p class="mono eyebrow">About</p>
+    <div class="about-grid">
+      <div class="portrait">
+        <img src="/images/portrait.jpg" alt="Rishi Srikaanth" width="600" height="750" />
+        <ul class="facts">
+          {facts.map((f) => <li class="mono">{f}</li>)}
+        </ul>
       </div>
+
+      <dl class="notes">
+        <div class="note">
+          <dt class="mono">What I do</dt>
+          <dd>
+            AI engineer finishing my M.S. in AI at Northeastern. I build and deploy
+            machine-learning pipelines — data systems and production-grade APIs.
+          </dd>
+        </div>
+        <div class="note">
+          <dt class="mono">Where I'm from</dt>
+          <dd>
+            My roots run through <span class="mark">Kenya and India</span>. The
+            multicultural lens is the most pivotal thing I bring to a problem —
+            there's always another vantage point worth taking.
+          </dd>
+        </div>
+        <div class="note">
+          <dt class="mono">Off the clock</dt>
+          <dd>Chess, tennis, and singing along to whatever's playing.</dd>
+        </div>
+      </dl>
     </div>
   </section>
 
