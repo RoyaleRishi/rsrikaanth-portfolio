@@ -9,5 +9,5 @@ bullets:
   - Built Python coding demos for ML/AI concepts alongside faculty, enhancing engagement by 30%.
   - Mentored 200+ students through projects in RL, DL, and CNNs, from problem design to evaluation.
 tech: ["Python", "Machine learning", "Mentorship"]
-order: 5
+order: 3
 ---

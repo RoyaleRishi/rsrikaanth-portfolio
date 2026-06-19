@@ -9,5 +9,5 @@ bullets:
   - Designed and deployed an Isolation Forest anomaly detector for GuardDuty/Macie logs - cut incident response time 30% across 100K+ event streams.
   - Prototyped an agentic AI system that surfaces risk-scoring insight by querying the database and LLMs.
 tech: ["Python", "LLMs", "AWS", "Anomaly detection"]
-order: 1
+order: 2
 ---

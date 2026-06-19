@@ -17,6 +17,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      (function () {
+        function apply() {
+          try {
+            var t = localStorage.getItem("theme");
+            if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            document.documentElement.dataset.theme = t;
+          } catch (e) {}
+        }
+        apply();
+        document.addEventListener("astro:after-swap", apply);
+      })();
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href={canonical} />
     <title>{title}</title>

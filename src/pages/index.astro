@@ -1,25 +1,16 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import WorkEntry from "../components/WorkEntry.astro";
 import FourPillars from "../components/FourPillars.astro";
 import Doodle from "../components/Doodle.astro";
 
-const work = await getCollection("work");
-const projects = work
-  .filter((e) => e.data.kind === "project")
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
-const roles = work
-  .filter((e) => e.data.kind === "role")
-  .sort((a, b) => a.data.order - b.data.order);
-
-const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-)[0];
+const facts = [
+  "M.S. Artificial Intelligence, Northeastern · GPA 3.952",
+  "B.Tech Computer Science, VIT University",
+  "Based in Boston, MA",
+];
 ---
 
-<BaseLayout title="Rishi Srikaanth: AI Engineer">
+<BaseLayout title="Rishi Srikaanth — AI Engineer">
   <section class="hero container">
     <div class="hero-text">
       <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
@@ -28,8 +19,40 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
     <FourPillars class="hero-pillars" />
   </section>
 
+  <section class="container about">
+    <Doodle name="chess" size={60} style="top:1rem; right:3%; transform:rotate(-7deg);" />
+    <div class="portrait">
+      <img src="/images/portrait.jpg" alt="Rishi Srikaanth" width="1000" height="1150" />
+      <ul class="facts">
+        {facts.map((f) => <li class="mono">{f}</li>)}
+      </ul>
+    </div>
+
+    <div class="body">
+      <p class="mono eyebrow">A bit about me</p>
+      <div class="prose">
+        <p>
+          I'm an AI engineer finishing my M.S. in AI at Northeastern. I design and
+          deploy machine-learning pipelines — data systems and production-grade APIs.
+        </p>
+        <p>
+          My roots run through <span class="mark">Kenya and India</span>. A
+          multicultural perspective is probably the most pivotal thing I bring to
+          my problem solving: I assume there's always another vantage point worth
+          taking.
+        </p>
+        <p>
+          I'd happily talk for hours about progressing cultural equity and
+          addressing socio-economic concerns in and with technology — especially
+          AI safety. That's the work I want to stay close to.
+        </p>
+        <p>For fun, I play chess and tennis, and I love to sing along as I listen to music.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="band block-marigold">
-    <Doodle name="tennis" size={88} style="top:50%; right:6%; transform:translateY(-50%) rotate(-10deg); opacity:0.28;" />
+    <Doodle name="tennis" size={88} style="top:50%; right:6%; transform:translateY(-50%) rotate(-10deg); opacity:0.28; color:#161410;" />
     <div class="container">
       <p class="mono band-label">What I care about</p>
       <p class="band-line">
@@ -38,63 +61,6 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
       </p>
     </div>
   </section>
-
-  <section class="container section">
-    <Doodle name="food" size={58} style="top:1.5rem; right:8%; transform:rotate(8deg);" />
-    <div class="head">
-      <h2>Selected projects</h2>
-      <a class="mono more" href="/projects">All projects <span aria-hidden="true">→</span></a>
-    </div>
-    {
-      projects.map((e) => (
-        <WorkEntry
-          title={e.data.title}
-          org={e.data.org}
-          period={e.data.period}
-          summary={e.data.summary}
-          bullets={e.data.bullets}
-          tech={e.data.tech}
-          links={e.data.links}
-        />
-      ))
-    }
-  </section>
-
-  <section class="container section">
-    <Doodle name="chess" size={62} style="top:1.4rem; right:6%; transform:rotate(-6deg);" />
-    <div class="head">
-      <h2>Experience</h2>
-      <a class="mono more" href="/experience">Full history <span aria-hidden="true">→</span></a>
-    </div>
-    <ul class="exp">
-      {
-        roles.map((e) => (
-          <li>
-            <span class="mono exp-period">{e.data.period}</span>
-            <span class="exp-role">{e.data.title}</span>
-            <span class="exp-org mono">{e.data.org}</span>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
-  {
-    latest && (
-      <section class="container section">
-        <div class="head">
-          <h2>Writing</h2>
-          <a class="mono more" href="/writing">
-            All essays <span aria-hidden="true">→</span>
-          </a>
-        </div>
-        <a class="latest" href={`/writing/${latest.id}`}>
-          <h3>{latest.data.title}</h3>
-          <p>{latest.data.description}</p>
-        </a>
-      </section>
-    )
-  }
 </BaseLayout>
 
 <style>
@@ -125,6 +91,42 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
     }
   }
 
+  .about {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-4) var(--space-5);
+  }
+  @media (min-width: 52rem) {
+    .about {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: var(--space-5);
+      align-items: start;
+    }
+  }
+  .portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 25%;
+    border-radius: 6px;
+    filter: grayscale(0.08);
+    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+  .facts {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .facts li {
+    color: var(--ink-mute);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 0.82rem;
+  }
+
   .band {
     position: relative;
     overflow: hidden;
@@ -133,7 +135,7 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
   }
   .band-label {
     margin: 0 0 var(--space-2);
-    color: color-mix(in srgb, var(--ink) 62%, transparent);
+    color: color-mix(in srgb, #161410 62%, transparent);
   }
   .band-line {
     font-family: var(--font-display);
@@ -142,76 +144,6 @@ const latest = (await getCollection("writing", ({ data }) => !data.draft)).sort(
     line-height: 1.04;
     letter-spacing: -0.02em;
     max-width: 18ch;
-    margin: 0;
-  }
-
-  .section {
-    position: relative;
-    padding-top: var(--space-5);
-  }
-  .head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-2);
-    margin-bottom: var(--space-1);
-  }
-  .more {
-    color: var(--ink-mute);
-  }
-  .more:hover {
-    color: var(--ink);
-  }
-
-  .exp {
-    list-style: none;
-    margin: var(--space-2) 0 0;
-    padding: 0;
-  }
-  .exp li {
-    display: grid;
-    grid-template-columns: 10rem 1fr auto;
-    gap: var(--space-2);
-    align-items: baseline;
-    padding-block: var(--space-2);
-    border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
-  }
-  .exp-period {
-    color: var(--ink-mute);
-  }
-  .exp-role {
-    font-weight: 500;
-    font-size: 1.1rem;
-  }
-  .exp-org {
-    color: var(--green-soft);
-    text-align: right;
-  }
-  @media (max-width: 640px) {
-    .exp li {
-      grid-template-columns: 1fr;
-      gap: 0.2rem;
-    }
-    .exp-org {
-      text-align: left;
-    }
-  }
-
-  .latest {
-    display: block;
-    padding-top: var(--space-3);
-    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-  }
-  .latest h3 {
-    margin: 0 0 var(--space-1);
-    transition: color 160ms ease;
-  }
-  .latest:hover h3 {
-    color: var(--vermilion);
-  }
-  .latest p {
-    color: var(--ink-mute);
-    max-width: var(--prose-max);
     margin: 0;
   }
 </style>

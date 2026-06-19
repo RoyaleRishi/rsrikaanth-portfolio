@@ -22,6 +22,17 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* In dark mode the grain lightens the deep ground instead of darkening it */
+:root[data-theme="dark"] body::before {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+:root[data-theme="dark"] body::after {
+  mix-blend-mode: screen;
+  opacity: 0.04;
 }
 
 /* Parchment grain, subtle fibrous paper texture over the base color */
@@ -143,12 +154,15 @@ img {
 
 /* ── Color-block sections ── */
 .block-ink {
-  background: var(--ink);
-  color: var(--on-ink);
+  background: #161410;
+  color: #f7f4ec;
+}
+:root[data-theme="dark"] .block-ink {
+  background: #211d16;
 }
 .block-marigold {
   background: var(--marigold);
-  color: var(--ink);
+  color: #161410;
 }
 .block-green {
   background: var(--green);
@@ -216,4 +230,24 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ── Theme toggle icon swap (moon in light, sun in dark) ── */
+.theme-toggle .icon-sun {
+  display: none;
+}
+.theme-toggle .icon-moon {
+  display: inline-flex;
+}
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: inline-flex;
+}
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* Dark variant of the nav kolam border (cream stroke instead of ink) */
+:root[data-theme="dark"] .kolam-rule {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='22'%3E%3Cpath d='M0,11 C0,1 20,1 20,11 C20,21 40,21 40,11' fill='none' stroke='%23ece6d8' stroke-width='1.3'/%3E%3Ccircle cx='0' cy='11' r='1.7' fill='%23f4b019'/%3E%3Ccircle cx='20' cy='11' r='1.7' fill='%23f4b019'/%3E%3Ccircle cx='40' cy='11' r='1.7' fill='%23f4b019'/%3E%3Ccircle cx='10' cy='4' r='1.2' fill='%23ece6d8'/%3E%3Ccircle cx='30' cy='18' r='1.2' fill='%23ece6d8'/%3E%3C/svg%3E");
+  opacity: 0.6;
 }

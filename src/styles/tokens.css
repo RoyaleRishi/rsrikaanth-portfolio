@@ -27,3 +27,18 @@
   --content-max: 76rem;
   --prose-max: 40rem;
 }
+
+/* Dark theme — warm "night parchment": deep ground, cream ink, marigold pops */
+:root[data-theme="dark"] {
+  --paper: #181610;
+  --paper-deep: #221f17;
+  --ink: #ece6d8;
+  --ink-soft: rgba(236, 230, 216, 0.16);
+  --ink-mute: #9c9482;
+  --marigold: #f4b019;
+  --marigold-ink: #f4b019;
+  --green: #2e5e3a;
+  --green-soft: #7cc69b;
+  --vermilion: #e2593f;
+  --on-ink: #f7f4ec;
+}

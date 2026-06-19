@@ -10,5 +10,5 @@ bullets:
 tech: ["Gemini", "FastAPI", "RAG"]
 links:
   - { label: "GitHub", href: "https://github.com/RoyaleRishi/Navigatio" }
-order: 6
+order: 3
 ---

@@ -10,5 +10,5 @@ bullets:
 tech: ["FastAPI", "PostgreSQL", "Apache AGE", "pgvector", "Alembic", "Docker"]
 links:
   - { label: "GitHub", href: "https://github.com/RoyaleRishi/NeuroNote" }
-order: 2
+order: 1
 ---

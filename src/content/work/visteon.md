@@ -9,5 +9,5 @@ bullets:
   - Deployed an in-vehicle network emulator for Bluetooth/HIL testing, accelerating integration cycles by 40%.
   - Built Bluetooth features in Java on embedded Android frameworks - deployed in 100K+ vehicles.
 tech: ["Java", "Android", "LLM tooling"]
-order: 7
+order: 4
 ---

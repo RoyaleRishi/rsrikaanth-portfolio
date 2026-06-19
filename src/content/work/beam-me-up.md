@@ -10,5 +10,5 @@ bullets:
 tech: ["Python", "Numba", "Probabilistic methods"]
 links:
   - { label: "GitHub", href: "https://github.com/RoyaleRishi" }
-order: 4
+order: 2
 ---

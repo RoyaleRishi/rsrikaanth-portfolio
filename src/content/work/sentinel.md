@@ -10,5 +10,5 @@ bullets:
 tech: ["LightGBM", "XGBoost", "PCA/LDA"]
 links:
   - { label: "GitHub", href: "https://github.com/RoyaleRishi/Malware-Detection-on-Windows_Telemetry-Data" }
-order: 8
+order: 4
 ---

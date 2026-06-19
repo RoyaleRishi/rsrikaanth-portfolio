@@ -8,24 +8,24 @@ const projects = (await getCollection("work"))
   .filter((e) => e.data.kind === "project")
   .sort((a, b) => a.data.order - b.data.order);
 
-// Skills arranged to loosely trace Scorpius: the constellation riding the
-// late-June sky around Rishi's birthday. Positions are a vague silhouette.
+// Skills (from the résumé) arranged to loosely trace a constellation.
+// `projects` lists the work each skill maps to; the first is the most relevant.
 const skills = [
-  { id: "llms", label: "LLMs", x: 22, y: 16, projects: ["neuronote", "navigatio"] },
-  { id: "agents", label: "Agents", x: 11, y: 30, projects: ["navigatio", "neuronote"] },
-  { id: "rag", label: "RAG", x: 30, y: 30, projects: ["navigatio", "neuronote"] },
-  { id: "fastapi", label: "FastAPI", x: 25, y: 45, projects: ["neuronote", "navigatio"] },
-  { id: "graphs", label: "Graph DBs", x: 33, y: 60, projects: ["neuronote"] },
-  { id: "probabilistic", label: "Probabilistic ML", x: 45, y: 70, ll: true, projects: ["beam-me-up"] },
-  { id: "perf", label: "Numba / perf", x: 58, y: 78, projects: ["beam-me-up"] },
-  { id: "boosting", label: "Gradient boosting", x: 70, y: 73, projects: ["sentinel"] },
-  { id: "features", label: "Feature engineering", x: 80, y: 62, ll: true, projects: ["sentinel"] },
-  { id: "a11y", label: "Accessibility", x: 86, y: 49, ll: true, projects: ["navigatio"] },
+  { id: "python", label: "Python", x: 22, y: 16, projects: ["neuronote", "navigatio", "beam-me-up", "sentinel"] },
+  { id: "nlp", label: "NLP", x: 11, y: 30, projects: ["neuronote"] },
+  { id: "llms", label: "LLMs", x: 30, y: 30, projects: ["navigatio", "neuronote"] },
+  { id: "postgres", label: "PostgreSQL", x: 25, y: 45, projects: ["neuronote"] },
+  { id: "neo4j", label: "Neo4j", x: 33, y: 60, projects: ["neuronote"] },
+  { id: "modeleval", label: "Model evaluation", x: 45, y: 70, ll: true, projects: ["sentinel", "beam-me-up"] },
+  { id: "numpy", label: "NumPy", x: 58, y: 78, projects: ["beam-me-up", "sentinel"] },
+  { id: "sklearn", label: "scikit-learn", x: 70, y: 73, projects: ["sentinel"] },
+  { id: "docker", label: "Docker", x: 80, y: 62, ll: true, projects: ["neuronote"] },
+  { id: "features", label: "Feature engineering", x: 86, y: 49, ll: true, projects: ["sentinel", "beam-me-up"] },
 ];
 const edges = [
-  ["agents", "rag"], ["llms", "rag"], ["rag", "fastapi"], ["fastapi", "graphs"],
-  ["graphs", "probabilistic"], ["probabilistic", "perf"], ["perf", "boosting"],
-  ["boosting", "features"], ["features", "a11y"],
+  ["nlp", "llms"], ["python", "llms"], ["llms", "postgres"], ["postgres", "neo4j"],
+  ["neo4j", "modeleval"], ["modeleval", "numpy"], ["numpy", "sklearn"],
+  ["sklearn", "docker"], ["docker", "features"],
 ];
 const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
 
@@ -281,11 +281,11 @@ const dust = [
   }
   .relevant {
     position: absolute;
-    top: var(--space-4);
-    right: 0;
+    top: -0.7rem;
+    left: 0;
     background: var(--marigold);
-    color: var(--ink);
-    padding: 0.2rem 0.6rem;
+    color: #161410;
+    padding: 0.2rem 0.7rem;
     border-radius: 999px;
     font-size: 0.68rem;
     opacity: 0;

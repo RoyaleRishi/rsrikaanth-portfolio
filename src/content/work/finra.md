@@ -8,5 +8,5 @@ bullets:
   - Supporting OCDO's R&D team with dataset preprocessing, and model evaluation.
   - Building Python/AWS proof-of-concept development
 tech: ["Python", "AWS", "GenAI"]
-order: 3
+order: 1
 ---

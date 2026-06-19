@@ -20,7 +20,7 @@ const { title, org, period, summary, bullets = [], tech = [], links = [] } = Ast
     <span class="mono org">{org}</span>
     <span class="mono period">{period}</span>
   </div>
-  <h3>{title}</h3>
+  <h2 class="entry-title">{title}</h2>
   <p class="summary">{summary}</p>
   {
     bullets.length > 0 && (
@@ -67,7 +67,11 @@ const { title, org, period, summary, bullets = [], tech = [], links = [] } = Ast
   .period {
     color: var(--ink-mute);
   }
-  h3 {
+  .entry-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
     margin: 0 0 var(--space-1);
   }
   .summary {
