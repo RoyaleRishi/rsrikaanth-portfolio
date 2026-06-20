@@ -110,9 +110,18 @@ const statements = [
   @media (max-width: 760px) {
     .hero-main {
       grid-template-columns: 1fr;
+      gap: var(--space-3);
     }
+    /* The photo becomes a centered medallion above the name instead of
+       a circle stranded in the top-left corner. */
     .portrait {
       order: -1;
+      justify-self: center;
+    }
+    /* Higher specificity than the base `.portrait img` rule, which is
+       declared later in the source, so this width wins when it matters. */
+    .hero-main .portrait img {
+      width: clamp(150px, 46vw, 200px);
     }
   }
   .facts {
