@@ -11,8 +11,8 @@ const projects = (await getCollection("work"))
 // Skills (from the résumé) arranged to loosely trace a constellation.
 // `projects` lists the work each skill maps to; the first is the most relevant.
 const skills = [
-  { id: "python", label: "Python", x: 22, y: 16, projects: ["neuronote", "navigatio", "beam-me-up", "sentinel"] },
-  { id: "nlp", label: "NLP", x: 11, y: 30, projects: ["neuronote"] },
+  { id: "python", label: "Python", x: 22, y: 16, projects: ["neuronote", "navigatio", "beam-me-up", "sentinel", "revcop"] },
+  { id: "nlp", label: "NLP", x: 11, y: 30, projects: ["neuronote", "revcop"] },
   { id: "llms", label: "LLMs", x: 30, y: 30, projects: ["navigatio", "neuronote"] },
   { id: "postgres", label: "PostgreSQL", x: 25, y: 45, projects: ["neuronote"] },
   { id: "neo4j", label: "Neo4j", x: 33, y: 60, projects: ["neuronote"] },
@@ -21,11 +21,14 @@ const skills = [
   { id: "sklearn", label: "scikit-learn", x: 70, y: 73, projects: ["sentinel"] },
   { id: "docker", label: "Docker", x: 80, y: 62, ll: true, projects: ["neuronote"] },
   { id: "features", label: "Feature engineering", x: 86, y: 49, ll: true, projects: ["sentinel", "beam-me-up"] },
+  { id: "deep-learning", label: "Deep learning", x: 6, y: 18, projects: ["revcop"] },
+  { id: "java", label: "Java", x: 75, y: 8, ll: true, projects: ["caley"] },
 ];
 const edges = [
   ["nlp", "llms"], ["python", "llms"], ["llms", "postgres"], ["postgres", "neo4j"],
   ["neo4j", "modeleval"], ["modeleval", "numpy"], ["numpy", "sklearn"],
   ["sklearn", "docker"], ["docker", "features"],
+  ["deep-learning", "nlp"], ["deep-learning", "python"], ["java", "python"],
 ];
 const pos = Object.fromEntries(skills.map((s) => [s.id, s]));
 
@@ -76,7 +79,7 @@ const dust = [
         Lit up below <span class="chev" aria-hidden="true">↓</span>
       </p>
     </div>
-    <p class="hint mono" data-hint>10 skills · 4 projects</p>
+    <p class="hint mono" data-hint>12 skills · 6 projects</p>
   </section>
 
   <section class="container cards" data-cards>
@@ -119,7 +122,7 @@ const dust = [
       cards.forEach((c) => c.classList.remove("is-dim", "is-match", "is-primary"));
       edges.forEach((e) => e.classList.remove("is-lit"));
       if (indicator) indicator.hidden = true;
-      if (hint) hint.textContent = "10 skills · 4 projects";
+      if (hint) hint.textContent = "12 skills · 6 projects";
     }
 
     function slowScrollTo(targetY: number) {
