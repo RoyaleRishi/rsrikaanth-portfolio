@@ -14,7 +14,7 @@ const roles = (await getCollection("work"))
     <Doodle name="fashion" size={64} style="top:2rem; right:6%; transform:rotate(7deg);" />
     <p class="mono eyebrow">Experience</p>
     <h1>Where I've worked</h1>
-    <p class="prose lead">
+    <p class="lead">
       Roles across AI engineering, embedded systems, and teaching: most come with a number I'm proud of.
     </p>
   </section>
@@ -49,5 +49,6 @@ const roles = (await getCollection("work"))
     font-size: 1.3rem;
     color: var(--ink-mute);
     margin-top: var(--space-2);
+    max-width: none;
   }
 </style>

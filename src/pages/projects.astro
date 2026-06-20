@@ -42,7 +42,7 @@ const dust = [
     <Doodle name="food" size={62} style="top:2rem; right:6%; transform:rotate(8deg);" />
     <p class="mono eyebrow">Projects</p>
     <h1>Things I've built</h1>
-    <p class="prose lead">
+    <p class="lead">
       A sky of skills. Tap a star to light up the project where it does the most work.
     </p>
   </section>
@@ -122,6 +122,28 @@ const dust = [
       if (hint) hint.textContent = "10 skills · 4 projects";
     }
 
+    function slowScrollTo(targetY: number) {
+      const startY = window.scrollY;
+      const diff = targetY - startY;
+      const duration = 900;
+      let startTime: number | null = null;
+      document.documentElement.style.scrollBehavior = "auto";
+      function ease(t: number) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      function step(ts: number) {
+        if (!startTime) startTime = ts;
+        const progress = Math.min((ts - startTime) / duration, 1);
+        window.scrollTo(0, startY + diff * ease(progress));
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          document.documentElement.style.scrollBehavior = "";
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
     function select(skill: string, btn: HTMLButtonElement) {
       if (active === skill) {
         reset();
@@ -146,6 +168,17 @@ const dust = [
         hint.textContent = `${btn.textContent?.trim()} → ${projects.length} project${projects.length > 1 ? "s" : ""}`;
     }
 
+    if (indicator) {
+      indicator.style.cursor = "pointer";
+      indicator.addEventListener("click", () => {
+        const primaryCard = cardsWrap.querySelector<HTMLElement>(".proj-card.is-primary");
+        if (primaryCard) {
+          const targetY = primaryCard.getBoundingClientRect().top + window.scrollY - 24;
+          slowScrollTo(targetY);
+        }
+      });
+    }
+
     nodes.forEach((n) => n.addEventListener("click", () => select(n.dataset.skill || "", n)));
   }
   wire();
@@ -165,6 +198,7 @@ const dust = [
     font-size: 1.3rem;
     color: var(--ink-mute);
     margin-top: var(--space-2);
+    max-width: none;
   }
 
   .sky {
@@ -172,7 +206,7 @@ const dust = [
     height: 380px;
     margin-top: var(--space-2);
     border-radius: 14px;
-    background: radial-gradient(120% 140% at 70% 0%, #1d3a30 0%, #122019 60%, #0d1712 100%);
+    background: radial-gradient(120% 140% at 70% 0%, #1d2a4d 0%, #111929 60%, #0c0f1c 100%);
     overflow: hidden;
     color: var(--on-ink);
   }
@@ -271,6 +305,7 @@ const dust = [
   .proj-card {
     position: relative;
     transition: opacity 220ms ease;
+    scroll-margin-top: var(--space-3);
   }
   .proj-card.is-dim {
     opacity: 0.32;

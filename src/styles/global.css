@@ -168,6 +168,10 @@ img {
   background: var(--green);
   color: var(--on-ink);
 }
+.block-vermilion {
+  background: var(--vermilion);
+  color: #f7f4ec;
+}
 .hairline {
   border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
 }

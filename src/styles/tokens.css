@@ -7,8 +7,8 @@
   --ink-mute: #5f5a49;
   --marigold: #f4b019;
   --marigold-ink: #6b4905; /* marigold dark, for text on paper that needs AA */
-  --green: #15402c;
-  --green-soft: #1d5238;
+  --green: #1c3461;
+  --green-soft: #2e56a8;
   --vermilion: #d6452b;
   --on-ink: #f7f4ec;
 
@@ -37,8 +37,8 @@
   --ink-mute: #9c9482;
   --marigold: #f4b019;
   --marigold-ink: #f4b019;
-  --green: #2e5e3a;
-  --green-soft: #7cc69b;
+  --green: #2a4a8a;
+  --green-soft: #7094d4;
   --vermilion: #e2593f;
   --on-ink: #f7f4ec;
 }

@@ -5,116 +5,122 @@ import Doodle from "../components/Doodle.astro";
 
 const facts = [
   "M.S. Artificial Intelligence, Northeastern · GPA 3.952",
-  "B.Tech Computer Science, VIT University",
+  "B.Tech Computer Science",
+];
+
+const statements = [
+  {
+    label: "What I care about",
+    cls: "block-marigold",
+    html: "Technology that takes <strong>cultural equity</strong> and <strong>AI safety</strong> as seriously as it takes performance.",
+  },
+  {
+    label: "The work",
+    cls: "block-ink",
+    html: "I design and deploy machine-learning pipelines: data systems and production-grade APIs.",
+  },
+  {
+    label: "My lens",
+    cls: "block-green",
+    html: "My roots run through <strong>Kenya and India</strong>, which taught me that there's always another vantage point worth considering.",
+  },
+  {
+    label: "Off the clock",
+    cls: "block-vermilion",
+    html: "Chess, tennis, and singing along to whatever's playing.",
+  },
 ];
 ---
 
 <BaseLayout title="Rishi Srikaanth - AI Engineer">
   <section class="hero container">
-    <div class="hero-text">
-      <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
-      <h1>Rishi<br />Srikaanth</h1>
-    </div>
-    <FourPillars class="hero-pillars" />
-  </section>
-
-  <section class="container about">
-    <Doodle name="chess" size={60} style="top:1rem; right:3%; transform:rotate(-7deg);" />
-    <div class="portrait">
-      <img src="/images/portrait.jpg" alt="Rishi Srikaanth" width="1000" height="1150" />
-      <ul class="facts">
-        {facts.map((f) => <li class="mono">{f}</li>)}
-      </ul>
-    </div>
-
-    <div class="body">
-      <p class="mono eyebrow">A bit about me</p>
-      <div class="prose">
-        <p>
-          I'm an AI engineer finishing my M.S. in AI at Northeastern. I design and
-          deploy machine-learning pipelines: data systems and production-grade APIs.
-        </p>
-        <p>
-          My roots run through <span class="mark">Kenya and India</span>. Which gives me a multicultural perspective to 
-          problem solving: there's always another vantage point worth considering.
-        </p>
-        <p>
-          I'd happily talk for hours about progressing equity and addressing socio-economic concerns 
-          in and with technology - especially AI safety. That's the work I want to stay close to.
-        </p>
-        <p>For fun, I play chess and tennis, and I love to sing along as I listen to music.</p>
+    <div class="hero-main">
+      <div class="hero-text">
+        <p class="mono eyebrow">AI Engineer <span aria-hidden="true">/</span> Boston, MA</p>
+        <h1>Rishi Srikaanth</h1>
+        <ul class="facts">
+          {facts.map((f) => <li class="mono">{f}</li>)}
+        </ul>
+        <ul class="contacts" aria-label="Contact links">
+          <li>
+            <a href="mailto:srikaanth.r@northeastern.edu" class="contact-link" aria-label="Email" title="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/rishisrikaanth" class="contact-link" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><circle cx="4" cy="4" r="2"/><rect x="2" y="9" width="4" height="12"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/RoyaleRishi" class="contact-link" aria-label="GitHub" title="GitHub" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="/resume.pdf" class="contact-link" aria-label="Download résumé" title="Download résumé" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="portrait">
+        <img src="/images/portrait.jpg" alt="Rishi Srikaanth" width="600" height="600" />
       </div>
     </div>
   </section>
 
-  <section class="band block-marigold">
-    <Doodle name="tennis" size={88} style="top:50%; right:6%; transform:translateY(-50%) rotate(-10deg); opacity:0.28; color:#161410;" />
-    <div class="container">
-      <p class="mono band-label">What I care about</p>
-      <p class="band-line">
-        Technology that takes <strong>cultural equity</strong> and
-        <strong>AI safety</strong> as seriously as it takes performance.
-      </p>
-    </div>
+  <section class="container pillars-section">
+    <Doodle name="food" size={54} style="top:0; right:4%; transform:rotate(8deg);" />
+    <p class="pillars-label">The pillars of my identity</p>
+    <FourPillars />
   </section>
+
+  <div class="statements">
+    {
+      statements.map((s) => (
+        <section class:list={["statement", s.cls]}>
+          <div class="container st-inner">
+            <p class="mono st-label">{s.label}</p>
+            <p class="st-line" set:html={s.html} />
+          </div>
+        </section>
+      ))
+    }
+  </div>
 </BaseLayout>
 
 <style>
   .hero {
+    padding-block: var(--space-5) var(--space-2);
+  }
+  .hero-main {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
     gap: var(--space-5);
-    padding-block: var(--space-5) var(--space-4);
   }
   .eyebrow {
     color: var(--marigold-ink);
     margin: 0 0 var(--space-2);
   }
   .hero-text h1 {
-    margin-bottom: 0;
-  }
-  .hero-pillars {
-    justify-self: end;
+    margin-bottom: var(--space-2);
   }
   @media (max-width: 760px) {
-    .hero {
+    .hero-main {
       grid-template-columns: 1fr;
-      gap: var(--space-4);
     }
-    .hero-pillars {
-      justify-self: start;
+    .portrait {
+      order: -1;
     }
-  }
-
-  .about {
-    position: relative;
-    display: grid;
-    gap: var(--space-4);
-    padding-block: var(--space-4) var(--space-5);
-  }
-  @media (min-width: 52rem) {
-    .about {
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: var(--space-5);
-      align-items: start;
-    }
-  }
-  .portrait img {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: center 25%;
-    border-radius: 6px;
-    filter: grayscale(0.08);
-    border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
   }
   .facts {
     list-style: none;
-    margin: var(--space-3) 0 0;
+    margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-1);
+    gap: 0.25rem;
   }
   .facts li {
     color: var(--ink-mute);
@@ -122,24 +128,69 @@ const facts = [
     letter-spacing: 0.02em;
     font-size: 0.82rem;
   }
+  .contacts {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    display: flex;
+    gap: 0.6rem;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    color: var(--ink-mute);
+    transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+  }
+  .contact-link:hover,
+  .contact-link:focus-visible {
+    color: var(--ink);
+    border-color: var(--marigold);
+    background: color-mix(in srgb, var(--marigold) 10%, transparent);
+  }
+  .portrait img {
+    width: clamp(160px, 22vw, 240px);
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: center 22%;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--marigold) 16%, transparent);
+  }
 
-  .band {
+  .pillars-section {
     position: relative;
-    overflow: hidden;
-    margin-top: var(--space-4);
-    padding-block: var(--space-5);
+    padding-block: var(--space-4) var(--space-6);
   }
-  .band-label {
+  .pillars-label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--marigold-ink);
+    margin: 0 0 var(--space-3);
+    text-align: center;
+  }
+
+  .statement {
+    padding-block: var(--space-6);
+  }
+  .st-label {
     margin: 0 0 var(--space-2);
-    color: color-mix(in srgb, #161410 62%, transparent);
+    color: color-mix(in srgb, currentColor 58%, transparent);
   }
-  .band-line {
+  .st-line {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.75rem, 4.5vw, 3rem);
+    font-size: clamp(1.9rem, 5vw, 3.4rem);
     line-height: 1.04;
     letter-spacing: -0.02em;
-    max-width: 18ch;
+    max-width: 20ch;
     margin: 0;
   }
 </style>

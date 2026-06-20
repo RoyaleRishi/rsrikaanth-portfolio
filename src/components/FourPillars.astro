@@ -188,14 +188,14 @@ const pillars = [
 <style>
   .pillars-wrap {
     display: grid;
-    gap: var(--space-3);
-    max-width: 40rem;
+    gap: var(--space-4);
+    max-width: 100%;
   }
   .pillars {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    gap: var(--space-3);
-    justify-content: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: center;
   }
   .pillar {
     position: relative;
@@ -208,8 +208,8 @@ const pillars = [
     border-radius: 8px;
   }
   .pillar svg {
-    width: 64px;
-    height: 64px;
+    width: 104px;
+    height: 104px;
     display: block;
     transition: transform 160ms ease;
   }
